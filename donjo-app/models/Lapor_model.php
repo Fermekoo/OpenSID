@@ -219,9 +219,13 @@
 				 ->where('tweb_surat_format.nama',$nama_surat);
 		 $query = $this->db->get();
 		 $data = $query->result_array();
+		 $j = $offset;
 		 for ($i=0; $i<count($data); $i++)
 		 {
-			 $data[$i]['ref_surat_nama']=($i+1).") ".$data[$i]['ref_surat_nama'];
+			 $data[$i]['no'] = $j + 1;
+			 $data[$i]['cb'] = "";
+			 $data[$i]['ref_surat_nama'] = $data[$i]['ref_surat_nama'];
+			 $j++;
 		 }
 		 return $data;
 	}
