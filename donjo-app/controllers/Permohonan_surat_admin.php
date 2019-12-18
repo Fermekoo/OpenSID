@@ -13,6 +13,7 @@ class Permohonan_surat_admin extends Admin_Controller {
 		$this->load->model('pamong_model');
 		$this->load->model('referensi_model');
 		$this->load->model('header_model');
+		$this->load->model('lapor_model');
 		$this->modul_ini = 14;
 	}
 
@@ -82,6 +83,7 @@ class Permohonan_surat_admin extends Admin_Controller {
 			->get('tweb_surat_format')
 			->row_array();
 		$data['url'] = $surat['url_surat'];
+		$data['jenis'] = $surat['nama'];
 		$url = $data['url'];
 
 		$data['list_dokumen'] = $this->penduduk_model->list_dokumen($_SESSION['id']);
@@ -89,7 +91,7 @@ class Permohonan_surat_admin extends Admin_Controller {
 		$data['anggota'] = $this->keluarga_model->list_anggota($data['individu']['id_kk']);
 		$this->get_data_untuk_form($url, $data);
 		$data['isian_form'] = json_encode($this->ambil_isi_form($periksa['isian_form']));
-		$data['periksa'] = $periksa; 
+		$data['periksa'] = $periksa;
 
 		$data['surat_url'] = rtrim($_SERVER['REQUEST_URI'], "/clear");
 		$data['form_action2'] = site_url("surat/periksa_doc/$id/$url");
@@ -151,4 +153,11 @@ class Permohonan_surat_admin extends Admin_Controller {
 		}
 		return $isian_form;
 	}
+
+	public function ajax_table_surat_permohonan()
+  {
+    $nama_surat = $this->input->post('nama_surat');
+    $data = $this->lapor_model->get_current_surat_nama($nama_surat);
+    echo json_encode($data);
+  }
 }
