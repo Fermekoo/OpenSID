@@ -57,6 +57,8 @@
       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-striped">
         <thead>
           <tr>
+            <th width="2">No</th>
+            <th width="7">Lengkap</th>
             <th width="800">Nama Dokumen</th>
             <th>&nbsp;</th>
           </tr>
@@ -167,7 +169,10 @@
           }
           for (var i = 0; i < data.length; i++)
           {
-            html += "<tr>"+"<td>"+data[i].ref_surat_nama+"</td>";
+            html += "<tr>"
+  					+"<td>"+data[i].no+"</td>"
+  					+"<td>"+data[i].cb+"<center><input type='checkbox' name='lengkap[]'></center>"+"</td>"
+  					+"<td>"+data[i].ref_surat_nama+"</td>";
           }
           $('#tbody-dokumen').html(html);
         },
