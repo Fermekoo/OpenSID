@@ -51,7 +51,7 @@ class Migrasi_1912_ke_2001 extends CI_model {
 	  }
 
     // Table surat_format_ref sbg link antara surat yg dimohon dan dokumen yg diperlukan
-		if (!$this->db->table_exists('ref_surat_format') )
+		if (!$this->db->table_exists('surat_format_ref') )
 		{
 	    $this->dbforge->add_field(array(
 				'id' => array(
