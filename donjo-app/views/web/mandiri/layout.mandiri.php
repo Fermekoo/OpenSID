@@ -1,6 +1,6 @@
 <style type="text/css">
   div.modal-header.bg-primary { padding: 10px; }
-  .admin { display: none !important; }
+  .tdk-permohonan { display: none !important; }
 </style>
 
 <?php $this->load->view('web/mandiri/header_mandiri.php') ?>
@@ -103,7 +103,8 @@
 <script>
   $(document).ready(function() {
     // Di form surat ubah isian admin menjadi disabled
-    $(".admin-edit").attr('disabled', true);
+    $(".readonly-permohonan").attr('disabled', true);
+    $("form#validasi").removeAttr('target');
 
     var alamat = "<?= site_url('lapor_web/insert') ?>";
     var m = <?= $m ?: 0;  ?>

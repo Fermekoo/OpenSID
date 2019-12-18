@@ -97,7 +97,7 @@
 		$paging_sql = ' LIMIT ' .$offset. ',' .$limit;
 
 		//Main Query
-		$select_sql = "SELECT u.*, n.nama AS nama, n.nik AS nik, s.nama as jenis_surat ";
+		$select_sql = "SELECT u.*, u.status as status_id, n.nama AS nama, n.nik AS nik, s.nama as jenis_surat ";
 		$list_data_sql = $this->list_data_sql();
 		$sql = $select_sql." ".$list_data_sql;
 

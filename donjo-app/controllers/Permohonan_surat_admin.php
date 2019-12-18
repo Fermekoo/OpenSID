@@ -6,6 +6,11 @@ class Permohonan_surat_admin extends Admin_Controller {
 	{
 		parent::__construct();
 		$this->load->model('permohonan_surat_model');
+		$this->load->model('penduduk_model');
+		$this->load->model('surat_model');
+		$this->load->model('keluarga_model');
+		$this->load->model('config_model');
+		$this->load->model('pamong_model');
 		$this->load->model('referensi_model');
 		$this->load->model('header_model');
 		$this->modul_ini = 14;
@@ -70,11 +75,38 @@ class Permohonan_surat_admin extends Admin_Controller {
 
 	public function periksa($id)
 	{
+		$periksa = $this->db->where('id', $id)
+			->get('permohonan_surat')
+			->row_array();
+		$surat = $this->db->where('id', $periksa['id_surat'])
+			->get('tweb_surat_format')
+			->row_array();
+		$data['url'] = $surat['url_surat'];
+		$url = $data['url'];
+
+		$data['list_dokumen'] = $this->penduduk_model->list_dokumen($_SESSION['id']);
+		$data['individu'] = $this->surat_model->get_penduduk($periksa['id_pemohon']);
+		$data['anggota'] = $this->keluarga_model->list_anggota($data['individu']['id_kk']);
+		$this->get_data_untuk_form($url, $data);
+		$data['isian_form'] = json_encode($this->ambil_isi_form($periksa['isian_form']));
+		$data['periksa'] = $periksa; 
+
+		$data['surat_url'] = rtrim($_SERVER['REQUEST_URI'], "/clear");
+		$data['form_action2'] = site_url("surat/periksa_doc/$id/$url");
+		$data['form_surat'] = "surat/form_surat.php";
+		$data['data'] = $data;
+
 		$header = $this->header_model->get_data();
 		$this->load->view('header', $header);
 		$this->load->view('nav', $nav);
 		$this->load->view('mandiri/periksa_surat', $data);
 		$this->load->view('footer');
+	}
+
+	public function belum_lengkap($id)
+	{
+		$this->permohonan_surat_model->update_status($id, array('status' => 1));
+		redirect('permohonan_surat_admin/index');
 	}
 
 	public function edit_status($id=0)
@@ -85,11 +117,38 @@ class Permohonan_surat_admin extends Admin_Controller {
 		$this->load->view('mandiri/ajax_edit_status', $data);
 	}
 
-	public function update_status($id='')
+	public function update_status($id='', $status='')
 	{
-		$data = array('status' => $this->input->post('status'));
+		$data = array('status' => $status ?: $this->input->post('status'));
 		$this->permohonan_surat_model->update_status($id, $data);
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
+	private function get_data_untuk_form($url, &$data)
+	{
+		$this->load->model('pamong_model');
+		$data['surat_terakhir'] = $this->surat_model->get_last_nosurat_log($url);
+		$data['surat'] = $this->surat_model->get_surat($url);
+		$data['input'] = $this->input->post();
+		$data['input']['nomor'] = $data['surat_terakhir']['no_surat_berikutnya'];
+		$data['format_nomor_surat'] = $this->penomoran_surat_model->format_penomoran_surat($data);
+		$data['lokasi'] = $this->config_model->get_data();
+		$data['pamong'] = $this->surat_model->list_pamong();
+		$pamong_ttd = $this->pamong_model->get_ttd();
+		$pamong_ub = $this->pamong_model->get_ub();
+		$data_form = $this->surat_model->get_data_form($url);
+		if (is_file($data_form))
+			include($data_form);
+	}
+
+	private function ambil_isi_form($isian_form)
+	{
+		$isian_form = json_decode($isian_form, true);
+		$hapus = array('url_surat', 'url_remote', 'nik', 'id_surat', 'nomor', 'pilih_atas_nama', 'pamong', 'pamong_nip', 'jabatan', 'pamong_id');
+		foreach ($hapus as $kolom)
+		{
+			unset($isian_form[$kolom]);
+		}
+		return $isian_form;
+	}
 }

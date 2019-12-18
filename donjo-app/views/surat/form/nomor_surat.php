@@ -21,7 +21,7 @@
   });
 </script>
 
-<div class="form-group admin">
+<div class="form-group tdk-permohonan">
 	<input type="hidden" name="id_surat" value="<?= $surat['id']?>">
 	<label for="nomor" class="col-sm-3 control-label">Nomor Surat</label>
 	<div class="col-sm-4">
