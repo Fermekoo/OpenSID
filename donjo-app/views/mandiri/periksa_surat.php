@@ -29,7 +29,7 @@
 	          <div class="box-tools pull-right">
 	            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 	          </div>
-						<h4>Periksa persyaratan</h4> 
+						<h4>Periksa persyaratan</h4>
 					</div>
 					<div class="box-body">
 						Periksa setiap dokumen untuk memastikan sesuai dengan persyaratan surat ini.
@@ -43,6 +43,64 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="box box-info" style="margin-top: 10px;">
+			<div class="box-header with-border">
+				<h4 class="box-title">DOKUMEN / KELENGKAPAN PENDUDUK YANG DIBUTUHKAN</h4>
+				<div class="box-tools pull-right">
+					<input type="hidden" id="jenis_surat" name="jenis_surat" value="<?=$jenis?>">
+					<button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#surat"><i class="fa fa-minus"></i></button>
+				</div>
+			</div>
+			<div class="box-body" id="surat">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-striped">
+					<thead>
+						<tr>
+							<th width="2">No</th>
+							<th width="7">Lengkap</th>
+							<th width="800">Nama Dokumen</th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody id="tbody-dokumen">
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="box box-info" style="margin-top: 10px;">
+	    <div class="box-header with-border">
+	      <h4 class="box-title">DOKUMEN / KELENGKAPAN PENDUDUK YANG TERSEDIA</h4>
+	      <div class="box-tools">
+	        <button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#dokumen"><i class="fa fa-minus"></i></button>
+	      </div>
+	    </div>
+	    <div class="box-body">
+	      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-striped">
+	        <thead>
+	          <tr>
+	            <th width="2">No</th>
+	            <th width="220">Nama Dokumen</th>
+	            <th width="360">Berkas</th>
+	            <th width="200">Tanggal Upload</th>
+	            <th>&nbsp;</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	          <?php foreach($list_dokumen as $data){?>
+	            <tr>
+	              <td align="center" width="2"><?php echo $data['no']?></td>
+	              <td><?php echo $data['nama']?></td>
+	              <td><a href="<?php echo base_url().LOKASI_DOKUMEN?><?php echo urlencode($data['satuan'])?>" ><?php echo $data['satuan']?></a></td>
+	              <td><?php echo tgl_indo2($data['tgl_upload'])?></td>
+	              <td></td>
+	            </tr>
+	          <?php }?>
+	        </tbody>
+	      </table>
+	    </div>
+	  </div>
+
 		<div class="row">
 			<div class="col-md-12">
 				<div class="box box-warning collapsed-box">
@@ -50,7 +108,7 @@
 	          <div class="box-tools pull-right">
 	            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
 	          </div>
-						<h4>Periksa isian form</h4> 
+						<h4>Periksa isian form</h4>
 					</div>
 					<div class="box-body">
 						Kalau isian sudah lengkap:
@@ -95,3 +153,40 @@
   	});
 	}
 </script>
+
+<script type='text/javascript'>
+  $(document).ready(function(){
+
+		var nama_surat = $('#jenis_surat').val();
+    var url = "<?= site_url('permohonan_surat_admin/ajax_table_surat_permohonan')?>";
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: {
+        nama_surat: nama_surat
+      },
+      dataType: "JSON",
+      success: function(data)
+      {
+        var html;
+        if (data.length == 0)
+        {
+          html = "<tr><td colspan='3' align='center'>No Data Available</td></tr>";
+        }
+        for (var i = 0; i < data.length; i++)
+				{
+					html += "<tr>"
+					+"<td>"+data[i].no+"</td>"
+					+"<td>"+data[i].cb+"<center><input type='checkbox' name='lengkap[]'></center>"+"</td>"
+					+"<td>"+data[i].ref_surat_nama+"</td>";
+				}
+        $('#tbody-dokumen').html(html);
+      },
+      error: function(err, jqxhr, errThrown)
+      {
+        console.log(err);
+      }
+    });
+ });
+ </script>
