@@ -112,7 +112,7 @@
 		}
 
     $endCount = $offset + $resultCount;
-    $morePages = $endCount > $count;
+    $morePages = $endCount < $jml;
 
     $hasil = array(
       "results" => $penduduk,

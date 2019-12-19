@@ -34,8 +34,8 @@
 												<div class="col-sm-6">
 													<select class="form-control input-sm " name="filter" onchange="formAction('mainform', '<?=site_url('komentar/filter')?>')">
 														<option value="">Semua</option>
-														<option value="1" <?php if ($filter==1): ?>selected<?php endif ?>>Aktif</option>
-														<option value="2" <?php if ($filter==2): ?>selected<?php endif ?>>Tidak Aktif</option>
+														<option value="1" <?php if ($filter_status==1): ?>selected<?php endif ?>>Aktif</option>
+														<option value="2" <?php if ($filter_status==2): ?>selected<?php endif ?>>Tidak Aktif</option>
 													</select>
 												</div>
 												<div class="col-sm-6">
@@ -59,29 +59,29 @@
 																	<th>No</th>
 																	<th>Aksi</th>
 																	<th>Pengirim</th>
-																	<?php if ($o==2): ?>
-                                    <th><a href="<?= site_url("komentar/index/$p/1")?>">Isi Komentar <i class='fa fa-sort-asc fa-sm'></i></a></th>
-                                  <?php elseif ($o==1): ?>
-                                    <th><a href="<?= site_url("komentar/index/$p/2")?>">Isi Komentar <i class='fa fa-sort-desc fa-sm'></i></a></th>
+																	<?php if ($o==6): ?>
+                                    <th><a href="<?= site_url("komentar/index/$p/5")?>">Isi Komentar <i class='fa fa-sort-asc fa-sm'></i></a></th>
+                                  <?php elseif ($o==5): ?>
+                                    <th><a href="<?= site_url("komentar/index/$p/6")?>">Isi Komentar <i class='fa fa-sort-desc fa-sm'></i></a></th>
                                   <?php else: ?>
-                                    <th><a href="<?= site_url("komentar/index/$p/1")?>">Isi Komentar <i class='fa fa-sort fa-sm'></i></a></th>
+                                    <th><a href="<?= site_url("komentar/index/$p/5")?>">Isi Komentar <i class='fa fa-sort fa-sm'></i></a></th>
                                   <?php endif; ?>
                                   <th>No. HP Pengirim</th>
 																	<th>Email Pengirim</th>
 																	<th>Judul Artikel</th>
-                                  <?php if ($o==4): ?>
-                                    <th nowrap><a href="<?= site_url("komentar/index/$p/3")?>">Aktif <i class='fa fa-sort-asc fa-sm'></i></a></th>
-                                  <?php elseif ($o==3): ?>
-                                    <th nowrap><a href="<?= site_url("komentar/index/$p/4")?>">Aktif <i class='fa fa-sort-desc fa-sm'></i></a></th>
+                                  <?php if ($o==8): ?>
+                                    <th nowrap><a href="<?= site_url("komentar/index/$p/7")?>">Aktif <i class='fa fa-sort-asc fa-sm'></i></a></th>
+                                  <?php elseif ($o==7): ?>
+                                    <th nowrap><a href="<?= site_url("komentar/index/$p/8")?>">Aktif <i class='fa fa-sort-desc fa-sm'></i></a></th>
                                   <?php else: ?>
-                                    <th nowrap><a href="<?= site_url("komentar/index/$p/3")?>">Aktif <i class='fa fa-sort fa-sm'></i></a></th>
+                                    <th nowrap><a href="<?= site_url("komentar/index/$p/7")?>">Aktif <i class='fa fa-sort fa-sm'></i></a></th>
                                   <?php endif; ?>
-																	<?php if ($o==6): ?>
-                                    <th nowrap><a href="<?= site_url("komentar/index/$p/5")?>">Dimuat Pada <i class='fa fa-sort-asc fa-sm'></i></a></th>
-                                  <?php elseif ($o==5): ?>
-                                    <th nowrap><a href="<?= site_url("komentar/index/$p/6")?>">Dimuat Pada <i class='fa fa-sort-desc fa-sm'></i></a></th>
+																	<?php if ($o==10): ?>
+                                    <th nowrap><a href="<?= site_url("komentar/index/$p/9")?>">Dimuat Pada <i class='fa fa-sort-asc fa-sm'></i></a></th>
+                                  <?php elseif ($o==9): ?>
+                                    <th nowrap><a href="<?= site_url("komentar/index/$p/10")?>">Dimuat Pada <i class='fa fa-sort-desc fa-sm'></i></a></th>
                                   <?php else: ?>
-                                    <th nowrap><a href="<?= site_url("komentar/index/$p/5")?>">Dimuat Pada <i class='fa fa-sort fa-sm'></i></a></th>
+                                    <th nowrap><a href="<?= site_url("komentar/index/$p/9")?>">Dimuat Pada <i class='fa fa-sort fa-sm'></i></a></th>
                                   <?php endif; ?>
 																</tr>
 															</thead>

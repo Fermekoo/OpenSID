@@ -7,6 +7,7 @@ class Migrasi_1912_ke_2001 extends CI_model {
 	  // Sesuaikan dengan sql_mode STRICT_TRANS_TABLES
 		$this->db->query("ALTER TABLE user MODIFY COLUMN last_login datetime NULL");
 		$this->surat_mandiri();		  
+		$this->mailbox();
 	}
 
 	private function surat_mandiri()
@@ -313,5 +314,58 @@ class Migrasi_1912_ke_2001 extends CI_model {
 			$this->db->query("ALTER TABLE keuangan_ta_spj_rinci ADD Kd_SubRinci varchar(10) NULL");			
 		}
 		$this->db->query("ALTER TABLE keuangan_ta_rpjm_sasaran MODIFY COLUMN Uraian_Sasaran varchar(250)");		
+	}
+
+	private function mailbox()
+	{
+		$modul_mailbox = array(
+			'modul' => 'Mailbox',
+			'url' => 'mailbox/clear'
+		);
+
+		$this->db
+			->where('id', '55')
+			->update('setting_modul', $modul_mailbox);
+
+		// Tambahkan kolom untuk menandai apakah pesan diarsipkan atau belum 
+		if (!$this->db->field_exists('is_archived', 'komentar')) {
+			$fields = array(
+				'is_archive' => array(
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'default' => 0
+				)
+			);
+			$this->dbforge->add_column('komentar', $fields);
+		}
+
+		// ubah nama kolom menjadi status untuk penanda status di mailbox
+		if ($this->db->field_exists('enabled', 'komentar')) {
+			$this->dbforge->modify_column('komentar', array(
+				'enabled' => array(
+					'name' => 'status',
+					'type' => 'TINYINT',
+					'constraint' => 1
+				)
+				));
+		}
+
+		// tambahkan kolom subjek untuk digunakan di menu mailbox
+		if (!$this->db->field_exists('subjek', 'komentar')) {
+			$this->dbforge->add_column('komentar', array(
+				'subjek' => array(
+					'type' => 'TINYTEXT',
+					'after' => 'email'
+				)
+			));
+		}
+
+		$subjek = array(
+			'subjek' => 'Tidak ada subjek pesan',
+		);
+		$this->db
+			->where('id_artikel', '775')
+			->where('subjek', NULL)
+			->update('komentar', $subjek);
 	}
 }

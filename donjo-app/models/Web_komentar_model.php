@@ -23,12 +23,32 @@
 		}
 	}
 
-	private function filter_sql()
+	private function filter_status_sql()
 	{
-		if (isset($_SESSION['filter']))
+		if (isset($_SESSION['filter_status']))
 		{
-			$kf = $_SESSION['filter'];
-			$filter_sql= " AND k.enabled = $kf";
+			$kf = $_SESSION['filter_status'];
+			$filter_sql= " AND k.status = $kf";
+			return $filter_sql;
+		}
+	}
+
+	private function filter_nik_sql()
+	{
+		if (isset($_SESSION['filter_nik']))
+		{
+			$kf = $_SESSION['filter_nik'];
+			$filter_sql= " AND k.email = $kf";
+			return $filter_sql;
+		}
+	}
+
+	private function filter_archived_sql()
+	{
+		if (isset($_SESSION['filter_archived']))
+		{
+			$kf = $_SESSION['filter_archived'];
+			$filter_sql= " AND k.is_archived = $kf";
 			return $filter_sql;
 		}
 	}
@@ -53,13 +73,16 @@
 	{
 		$sql = "FROM komentar k
 			LEFT JOIN artikel a ON k.id_artikel = a.id
-			WHERE 1 ";
-		if ($cas == 2)
+			WHERE 1";
+		if ($cas == 2) {
 			$sql .= " AND id_artikel = 775";
+			$sql .= $this->filter_nik_sql();
+			$sql .= $this->filter_archived_sql();
+		}
 		else
 			$sql .= " AND id_artikel <> 775";
 		$sql .= $this->search_sql();
-		$sql .= $this->filter_sql();
+		$sql .= $this->filter_status_sql();
 		return $sql;
 	}
 
@@ -67,12 +90,16 @@
 	{
 		switch ($o)
 		{
-			case 1: $order_sql = ' ORDER BY komentar DESC'; break;
-			case 2: $order_sql = ' ORDER BY komentar'; break;
-			case 3: $order_sql = ' ORDER BY enabled DESC'; break;
-			case 4: $order_sql = ' ORDER BY enabled'; break;
-			case 5: $order_sql = ' ORDER BY tgl_upload DESC'; break;
-			case 6: $order_sql = ' ORDER BY tgl_upload'; break;
+			case 1: $order_sql = ' ORDER BY owner DESC'; break;
+			case 2: $order_sql = ' ORDER BY owner'; break;
+			case 3: $order_sql = ' ORDER BY email DESC'; break;
+			case 4: $order_sql = ' ORDER BY email'; break;
+			case 5: $order_sql = ' ORDER BY komentar DESC'; break;
+			case 6: $order_sql = ' ORDER BY komentar'; break;
+			case 7: $order_sql = ' ORDER BY status DESC'; break;
+			case 8: $order_sql = ' ORDER BY status'; break;
+			case 9: $order_sql = ' ORDER BY tgl_upload DESC'; break;
+			case 10: $order_sql = ' ORDER BY tgl_upload'; break;
 
 			default:$order_sql = ' ORDER BY tgl_upload DESC';
 		}
@@ -89,7 +116,7 @@
 		for ($i=0; $i<count($data); $i++)
 		{
 			$data[$i]['no'] = $j + 1;
-			if ($data[$i]['enabled'] == 1)
+			if ($data[$i]['status'] == 1)
 				$data[$i]['aktif'] = "Ya";
 			else
 				$data[$i]['aktif'] = "Tidak";
@@ -155,7 +182,7 @@
 	{
 		$outp = $this->db->where('id', $id)
 			->update('komentar', array(
-					'enabled' => $val,
+					'status' => $val,
 					'updated_at' => date('Y-m-d H:i:s')));
 		if ($outp) $_SESSION['success'] = 1;
 		else $_SESSION['success'] = -1;

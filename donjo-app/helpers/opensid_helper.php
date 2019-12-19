@@ -276,6 +276,10 @@ define("ASAL_INVENTARIS", serialize(array(
 	"Bantuan Kabupaten" => "4",
 	"Sumbangan" => "5"
 )));
+define("KATEGORI_MAILBOX", serialize(array(
+	"Kotak Masuk" => "1",
+	"Kotak Keluar" => "2"
+)));
 
 /**
  * Ambil Versi

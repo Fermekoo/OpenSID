@@ -554,5 +554,44 @@ class Web_dokumen_model extends CI_Model {
 			->get()->result_array();
 		return $data;
 	}
+
+	public function get_current_surat_nama($nama_surat)
+	{
+		$this->db->select('*')
+				 ->from('tweb_surat_format')
+				 ->join('surat_format_ref', "tweb_surat_format.id = surat_format_ref.surat_format_id")
+				 ->join('ref_surat_format', "ref_surat_format.ref_surat_id = surat_format_ref.ref_surat_id")
+				 ->where('tweb_surat_format.nama',$nama_surat);
+		 $query = $this->db->get();
+		 $data = $query->result_array();
+		 $j = 0;
+		 for ($i=0; $i<count($data); $i++)
+		 {
+			 $data[$i]['no'] = $j + 1;
+			 $data[$i]['cb'] = "";
+			 $data[$i]['ref_surat_nama'] = $data[$i]['ref_surat_nama'];
+			 $j++;
+		 }
+		 return $data;
+	}
+
+	public function get_surat_ref_all()
+	{
+		$this->db->select('*')
+		         ->from('ref_surat_format');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_current_surat_ref($id)
+	{
+		$this->db->select('*')
+				 ->from('tweb_surat_format')
+				 ->join('surat_format_ref', "tweb_surat_format.id = surat_format_ref.surat_format_id")
+				 ->join('ref_surat_format', "ref_surat_format.ref_surat_id = surat_format_ref.ref_surat_id")
+				 ->where('surat_format_ref.surat_format_id',$id);
+		$query = $this->db->get();
+		return $query->result();
+	}
 }
 ?>
