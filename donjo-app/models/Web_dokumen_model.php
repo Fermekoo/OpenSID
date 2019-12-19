@@ -395,7 +395,7 @@ class Web_dokumen_model extends CI_Model {
 	{
 		// Ambil nama berkas dari database untuk dokumen yg aktif
 		$nama_berkas = $this->db->select('satuan')
-			->where('id', $id)			
+			->where('id', $id)
 			->where('id_pend', 0)
 			->where('enabled', 1)
 			->get('dokumen')->row()->satuan;
@@ -593,5 +593,32 @@ class Web_dokumen_model extends CI_Model {
 		$query = $this->db->get();
 		return $query->result();
 	}
+
+	public function remove_from_privileges($privilege_ids=false, $surat_format_id=false)
+	{
+
+		if(empty($surat_format_id))
+		{
+			return FALSE;
+		}
+
+		if(!is_array($privilege_ids))
+		{
+			$privilege_ids = array($privilege_ids);
+		}
+
+		foreach($privilege_ids as $privilege_id)
+		{
+			$this->db->select('*')
+					 ->from('surat_format_ref')
+					 ->join('tweb_surat_format', "tweb_surat_format.id = surat_format_ref.surat_format_id")
+					 ->join('ref_surat_format', "ref_surat_format.ref_surat_id = surat_format_ref.ref_surat_id")
+					 ->where('surat_format_ref.surat_format_id',$surat_format_id);
+			$this->db->delete();
+		}
+
+		return TRUE;
+	}  
+
 }
 ?>
