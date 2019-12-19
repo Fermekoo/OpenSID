@@ -339,6 +339,7 @@ class Migrasi_1912_ke_2001 extends CI_model {
 			$this->dbforge->add_column('komentar', $fields);
 		}
 
+
 		// ubah nama kolom menjadi status untuk penanda status di mailbox
 		if ($this->db->field_exists('enabled', 'komentar')) {
 			$this->dbforge->modify_column('komentar', array(
@@ -350,7 +351,28 @@ class Migrasi_1912_ke_2001 extends CI_model {
 				));
 		}
 
-		// tambahkan kolom subjek untuk digunakan di menu mailbox
+		// Tambahkan kolom tipe untuk membedakan pesan inbox dan outbox
+		if (!$this->db->field_exists('tipe', 'komentar')) {
+			$fields = array(
+				'tipe' => array(
+					'type' => 'TINYINT',
+					'constraint' => 1,
+					'after' => 'status'
+				)
+			);
+			$this->dbforge->add_column('komentar', $fields);
+		}
+
+		// Paksa data lapor yang sudah ada memiliki tipe inbox
+		$tipe = array(
+			'tipe' => '1',
+		);
+		$this->db
+			->where('id_artikel', '775')
+			->where('tipe', NULL)
+			->update('komentar', $tipe);
+
+		// Tambahkan kolom subjek untuk digunakan di menu mailbox
 		if (!$this->db->field_exists('subjek', 'komentar')) {
 			$this->dbforge->add_column('komentar', array(
 				'subjek' => array(

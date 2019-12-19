@@ -45,17 +45,15 @@
 
 	private function filter_archived_sql()
 	{
-		if (isset($_SESSION['filter_archived']))
-		{
-			$kf = $_SESSION['filter_archived'];
-			$filter_sql= " AND k.is_archived = $kf";
-			return $filter_sql;
-		}
+		$kf = $_SESSION['filter_archived'] ?: 0;
+		$filter_sql= " AND k.is_archived = $kf";
+
+		return $filter_sql;
 	}
 
-	public function paging($p=1, $o=0, $cas=0)
+	public function paging($p=1, $o=0, $kat=0)
 	{
-		$sql = "SELECT COUNT(*) AS jml " . $this->list_data_sql($cas);
+		$sql = "SELECT COUNT(*) AS jml " . $this->list_data_sql($kat);
 		$query = $this->db->query($sql);
 		$row = $query->row_array();
 		$jml_data = $row['jml'];
@@ -69,13 +67,13 @@
 		return $this->paging;
 	}
 
-	private function list_data_sql($cas=0)
+	private function list_data_sql($kat=0)
 	{
 		$sql = "FROM komentar k
 			LEFT JOIN artikel a ON k.id_artikel = a.id
 			WHERE 1";
-		if ($cas == 2) {
-			$sql .= " AND id_artikel = 775";
+		if ($kat != 0) {
+			$sql .= " AND id_artikel = 775 AND tipe = $kat";
 			$sql .= $this->filter_nik_sql();
 			$sql .= $this->filter_archived_sql();
 		}
@@ -86,7 +84,7 @@
 		return $sql;
 	}
 
-	public function list_data($o=0, $offset=0, $limit=500, $cas=0)
+	public function list_data($o=0, $offset=0, $limit=500, $kat=0)
 	{
 		switch ($o)
 		{
@@ -105,7 +103,7 @@
 		}
 		$paging_sql = ' LIMIT ' .$offset. ',' .$limit;
 
-		$sql = "SELECT k.*, a.judul as artikel " . $this->list_data_sql($cas);
+		$sql = "SELECT k.*, a.judul as artikel " . $this->list_data_sql($kat);
 		$sql .= $order_sql;
 		$sql .= $paging_sql;
 
@@ -147,6 +145,40 @@
 	  $data['updated_at'] = date('Y-m-d H:i:s');
 		$this->db->where('id', $id);
 		$outp = $this->db->update('komentar', $data);
+		if ($outp) $_SESSION['success'] = 1;
+		else $_SESSION['success'] = -1;
+	}
+
+	public function archive($id)
+	{
+		$archive = array(
+			'is_archived' => 1,
+			'updated_at' => date('Y-m-d H:i:s')
+		);
+		$outp = $this->db->where('id', $id)->update('komentar', $archive);
+
+		if ($outp) $_SESSION['success'] = 1;
+		else $_SESSION['success'] = -1;
+	}
+
+	public function archive_all()
+	{
+		$id_cb = $_POST['id_cb'];
+
+		if (count($id_cb)) 
+		{
+			foreach ($id_cb as $id) 
+			{
+				$archive = array(
+					'is_archived' => 1,
+					'updated_at' => date('Y-m-d H:i:s')
+				);
+				$outp = $this->db->where('id', $id)->update('komentar', $archive);
+			}
+		}
+		else
+			$outp = false;
+
 		if ($outp) $_SESSION['success'] = 1;
 		else $_SESSION['success'] = -1;
 	}

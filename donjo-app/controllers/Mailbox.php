@@ -39,8 +39,8 @@ class Mailbox extends Admin_Controller {
 			$data['individu'] = $this->mandiri_model->get_pendaftar_mandiri($nik);
 		}
 
-		$data['paging'] = $this->web_komentar_model->paging($p, $o, 2);
-		$data['main'] = $this->web_komentar_model->list_data($o, $data['paging']->offset, $data['paging']->per_page, 2);
+		$data['paging'] = $this->web_komentar_model->paging($p, $o, $kat);
+		$data['main'] = $this->web_komentar_model->list_data($o, $data['paging']->offset, $data['paging']->per_page, $kat);
 		$data['keyword'] = $this->web_komentar_model->autocomplete();
 		$data['submenu'] = $this->mailbox_model->list_menu();
 		
@@ -64,6 +64,24 @@ class Mailbox extends Admin_Controller {
 		$this->load->view('header', $header);
 		$this->load->view('nav', $nav);
 		$this->load->view('mailbox/table', $data);
+		$this->load->view('footer');
+	}
+
+	public function baca_pesan($kat = 1, $id)
+	{
+		$this->web_komentar_model->komentar_lock($id, 1);
+		unset($_SESSION['success']);
+		
+		$data['kat'] = $kat;
+		$data['pesan'] = $this->web_komentar_model->get_komentar($id);
+		$data['tipe_mailbox'] = $this->mailbox_model->get_kat_nama($kat); 
+		$header = $this->header_model->get_data();
+		$nav['act'] = 14;
+		$nav['act_sub'] = 55;
+
+		$this->load->view('header', $header);
+		$this->load->view('nav', $nav);
+		$this->load->view('mailbox/detail', $data);
 		$this->load->view('footer');
 	}
 
@@ -145,18 +163,18 @@ class Mailbox extends Admin_Controller {
 		redirect("first/mandiri/1/3");
 	}
 
-	public function delete($p = 1, $o = 0, $id = '')
+	public function archive($kat = 1, $p = 1, $o = 0, $id = '')
 	{
 		$this->redirect_hak_akses('h', "mailbox/index/$p/$o");
-		$this->web_komentar_model->delete($id);
-		redirect("mailbox/index/$p/$o");
+		$this->web_komentar_model->archive($id);
+		redirect("mailbox/index/$kat/$p/$o");
 	}
 
-	public function delete_all($p = 1, $o = 0)
+	public function archive_all($kat = 1, $p = 1, $o = 0)
 	{
 		$this->redirect_hak_akses('h', "mailbox/index/$p/$o");
-		$this->web_komentar_model->delete_all();
-		redirect("mailbox/index/$p/$o");
+		$this->web_komentar_model->archive_all();
+		redirect("mailbox/index/$kat/$p/$o");
 	}
 
 	public function komentar_lock($id = '')

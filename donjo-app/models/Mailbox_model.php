@@ -50,5 +50,12 @@
 		return $this->referensi_model->list_kode_array(KATEGORI_MAILBOX);
 	}
 
+	public function get_kat_nama($kat)
+	{
+		$sub_menu = $this->list_menu();	
+		$data = $sub_menu[$kat];
+		return $data;
+	}
+
 }
 ?>

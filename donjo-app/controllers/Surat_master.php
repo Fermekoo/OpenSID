@@ -9,7 +9,7 @@ class Surat_master extends Admin_Controller {
 		$this->load->model('surat_master_model');
 		$this->load->model('klasifikasi_model');
 		$this->load->model('header_model');
-		$this->load->model('lapor_model');
+		$this->load->model('web_dokumen_model');
 		$this->modul_ini = 4;
 	}
 
@@ -198,12 +198,12 @@ class Surat_master extends Admin_Controller {
 		$data['p'] = $p;
 		$data['o'] = $o;
 		$data['klasifikasi'] = $this->klasifikasi_model->list_kode();
-		$privilege = $this->lapor_model->get_surat_ref_all();
+		$privilege = $this->web_dokumen_model->get_surat_ref_all();
 
 		if ($id)
 		{
 			$data['surat_master'] = $this->surat_master_model->get_surat_format($id);
-			$currentPrivilege = $this->lapor_model->get_current_surat_ref($id);
+			$currentPrivilege = $this->web_dokumen_model->get_current_surat_ref($id);
 			$data['form_action'] = site_url("surat_master/update_surat_mohon/$p/$o/$id");
 		}
 		else
@@ -231,7 +231,7 @@ class Surat_master extends Admin_Controller {
 		$privilegeData = $this->input->post('privlg');
 
 		if (isset($privilegeData) && !empty($privilegeData)) {
-			$query = $this->lapor_model->remove_from_privileges($privilegeData, $id);
+			$query = $this->web_dokumen_model->remove_from_privileges($privilegeData, $id);
 			foreach ($privilegeData as $key => $value) {
 			$data = array('ref_surat_id' => $privilegeData[$key], 'surat_format_id' => $id);
 			$result = $this->db->insert('surat_format_ref', $data);
