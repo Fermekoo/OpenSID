@@ -7,7 +7,7 @@ class Surat_mohon extends Admin_Controller {
 		parent::__construct();
 		session_start();
 		$this->load->model('header_model');
-		$this->load->model('web_dokumen_model');
+		$this->load->model('lapor_model');
 		$this->modul_ini = 4;
 	}
 
@@ -35,9 +35,9 @@ class Surat_mohon extends Admin_Controller {
 			$_SESSION['per_page'] = $_POST['per_page'];
 		$data['per_page'] = $_SESSION['per_page'];
 
-		$data['paging'] = $this->web_dokumen_model->paging($p, $o);
-		$data['main'] = $this->web_dokumen_model->list_data($o, $data['paging']->offset, $data['paging']->per_page);
-		$data['keyword'] = $this->web_dokumen_model->autocomplete();
+		$data['paging'] = $this->lapor_model->paging($p, $o);
+		$data['main'] = $this->lapor_model->list_data($o, $data['paging']->offset, $data['paging']->per_page);
+		$data['keyword'] = $this->lapor_model->autocomplete();
 
 		$header = $this->header_model->get_data();
 		$nav['act'] = 4;
@@ -56,7 +56,7 @@ class Surat_mohon extends Admin_Controller {
 
 		if ($id)
 		{
-			$data['ref_surat_format'] = $this->web_dokumen_model->get_surat($id);
+			$data['ref_surat_format'] = $this->lapor_model->get_surat($id);
 			$data['form_action'] = site_url("surat_mohon/update/$p/$o/$id");
 		}
 		else
@@ -107,39 +107,39 @@ class Surat_mohon extends Admin_Controller {
 
 	public function insert()
 	{
-		$this->web_dokumen_model->insert_ref_surat();
+		$this->lapor_model->insert_ref_surat();
 		redirect('surat_mohon');
 	}
 
 	public function update($p = 1, $o = 0, $id = '')
 	{
-		$this->web_dokumen_model->update($id);
+		$this->lapor_model->update($id);
 		redirect("surat_mohon/index/$p/$o");
 	}
 
 	public function delete($p = 1, $o = 0, $id = '')
 	{
 		$this->redirect_hak_akses('h', "surat_mohon/index/$p/$o");
-		$this->web_dokumen_model->delete($id);
+		$this->lapor_model->delete($id);
 		redirect("surat_mohon/index/$p/$o");
 	}
 
 	public function delete_all($p = 1, $o = 0)
 	{
 		$this->redirect_hak_akses('h', "surat_mohon/index/$p/$o");
-		$this->web_dokumen_model->delete_all();
+		$this->lapor_model->delete_all();
 		redirect("surat_mohon/index/$p/$o");
 	}
 
 	public function user_lock($id = '')
 	{
-		$this->web_dokumen_model->user_lock($id, 0);
+		$this->lapor_model->user_lock($id, 0);
 		redirect("surat_mohon/index/$p/$o");
 	}
 
 	public function user_unlock($id = '')
 	{
-		$this->web_dokumen_model->user_lock($id, 1);
+		$this->lapor_model->user_lock($id, 1);
 		redirect("surat_mohon/index/$p/$o");
 	}
 
