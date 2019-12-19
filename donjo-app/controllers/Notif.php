@@ -17,9 +17,9 @@ class Notif extends Admin_Controller {
 		}
 	}
 
-	public function lapor()
+	public function inbox()
 	{
-		$j = $this->notif_model->lapor_baru();
+		$j = $this->notif_model->inbox_baru();
 		if ($j > 0)
 		{
 			echo $j;

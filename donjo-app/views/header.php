@@ -93,10 +93,10 @@
 									</a>
 								</li>
 							<?php endif; ?>
-							<?php if ($this->CI->cek_hak_akses('b', 'lapor')): ?>
+							<?php if ($this->CI->cek_hak_akses('b', 'mailbox')): ?>
 								<li>
-									<a href="<?=site_url()?>lapor">
-										<i class="fa fa-envelope fa-lg" title="Laporan mandiri baru"></i><span class="badge" id="b_lapor"></span>
+									<a href="<?=site_url()?>mailbox">
+										<i class="fa fa-envelope fa-lg" title="Pesan masuk baru"></i><span class="badge" id="b_inbox"></span>
 									</a>
 								</li>
 							<?php endif; ?>
