@@ -13,7 +13,7 @@ class Permohonan_surat_admin extends Admin_Controller {
 		$this->load->model('pamong_model');
 		$this->load->model('referensi_model');
 		$this->load->model('header_model');
-		$this->load->model('web_dokumen_model');
+		$this->load->model('lapor_model');
 		$this->modul_ini = 14;
 	}
 
@@ -157,7 +157,7 @@ class Permohonan_surat_admin extends Admin_Controller {
 	public function ajax_table_surat_permohonan()
   {
     $nama_surat = $this->input->post('nama_surat');
-    $data = $this->web_dokumen_model->get_current_surat_nama($nama_surat);
+    $data = $this->lapor_model->get_current_surat_nama($nama_surat);
     echo json_encode($data);
   }
 }

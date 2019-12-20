@@ -45,6 +45,7 @@ class First extends Web_Controller {
 		$this->load->model('referensi_model');
 		$this->load->model('keuangan_model');
     $this->load->model('web_dokumen_model');
+		$this->load->model('lapor_model');
 	}
 
 	public function auth()
@@ -591,7 +592,7 @@ class First extends Web_Controller {
 	public function ajax_table_surat_permohonan1()
   {
     $nama_surat = $this->input->post('nama_surat');
-    $data = $this->web_dokumen_model->get_current_surat_nama($nama_surat);
+    $data = $this->lapor_model->get_current_surat_nama($nama_surat);
     echo json_encode($data);
   }
 
