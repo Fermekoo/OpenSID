@@ -7,7 +7,7 @@
 		</ol>
 	</section>
 	<section class="content" id="maincontent">
-		<div class="form-horizontal">
+		<form action="<?= site_url('mailbox/form') ?>" class="form-horizontal" method="post">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="box box-info">
@@ -27,18 +27,14 @@
 								<label class="control-label col-sm-2" for="email">NIK</label>
 								<div class="col-sm-9">
 									<div class="form-control input-sm"><?= $pesan['email']?></div>
-								</div>
-							</div>
-              <div class="form-group">
-								<label class="control-label col-sm-2" for="no_hp">No. HP</label>
-								<div class="col-sm-9">
-									<div class="form-control input-sm"><?= $pesan['no_hp']?></div>
+									<input type="hidden" name="nik" value="<?= $pesan['email']?>">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-sm-2" for="email">Subjek</label>
+								<label class="control-label col-sm-2" for="subjek">Subjek</label>
 								<div class="col-sm-9">
 									<div class="form-control input-sm"><?= $pesan['subjek']?></div>
+									<input type="hidden" name="subjek" value="<?= $pesan['subjek']?>">
 								</div>
 							</div>
               <div class="form-group">
@@ -46,19 +42,18 @@
 								<div class="col-sm-9">
 									<textarea class="form-control input-sm" readonly id="pesan"><?= $pesan['komentar']?></textarea>
 								</div>
-							</div>
-              
+							</div  
 						</div>
 						<div class='box-footer'>
 							<div class='col-xs-12'>
-								<button type='submit' class='btn btn-social btn-flat btn-info btn-sm pull-right confirm'><i class='fa fa-check'></i> Simpan</button>
+								<button type="submit" class='btn btn-social btn-flat btn-info btn-sm pull-right confirm'><i class='fa fa-reply'></i> Balas Pesan</button>
 							</div>
 						</div>
 
 					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 	</section>
 </div>
 <script>

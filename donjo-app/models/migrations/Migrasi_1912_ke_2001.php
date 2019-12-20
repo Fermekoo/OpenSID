@@ -330,7 +330,7 @@ class Migrasi_1912_ke_2001 extends CI_model {
 		// Tambahkan kolom untuk menandai apakah pesan diarsipkan atau belum 
 		if (!$this->db->field_exists('is_archived', 'komentar')) {
 			$fields = array(
-				'is_archive' => array(
+				'is_archived' => array(
 					'type' => 'TINYINT',
 					'constraint' => 1,
 					'default' => 0
@@ -348,7 +348,7 @@ class Migrasi_1912_ke_2001 extends CI_model {
 					'type' => 'TINYINT',
 					'constraint' => 1
 				)
-				));
+			));
 		}
 
 		// Tambahkan kolom tipe untuk membedakan pesan inbox dan outbox

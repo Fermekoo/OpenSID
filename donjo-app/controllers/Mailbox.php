@@ -41,6 +41,7 @@ class Mailbox extends Admin_Controller {
 
 		$data['paging'] = $this->web_komentar_model->paging($p, $o, $kat);
 		$data['main'] = $this->web_komentar_model->list_data($o, $data['paging']->offset, $data['paging']->per_page, $kat);
+		$data['owner'] = $kat == 1 ? 'Pengirim' : 'Penerima';
 		$data['keyword'] = $this->web_komentar_model->autocomplete();
 		$data['submenu'] = $this->mailbox_model->list_menu();
 		
@@ -67,6 +68,36 @@ class Mailbox extends Admin_Controller {
 		$this->load->view('footer');
 	}
 
+	public function form()
+	{
+		if (!empty($nik = $this->input->post('nik'))) {
+			$data['individu'] = $this->mandiri_model->get_pendaftar_mandiri($nik);
+		}
+		if (!empty($subjek = $this->input->post('subjek'))) {
+			$data['subjek'] = "Balasan: {$subjek}";
+		}
+		$data['form_action'] = site_url("mailbox/kirim_pesan");
+
+		$header = $this->header_model->get_data();
+		$nav['act'] = 14;
+		$nav['act_sub'] = 55;
+
+		$this->load->view('header', $header);
+		$this->load->view('nav', $nav);
+		$this->load->view('mailbox/form', $data);
+		$this->load->view('footer');
+	}
+
+	public function kirim_pesan()
+	{
+		$data = $this->input->post();
+		$data['tipe'] = 2;
+		$data['status'] = 1;
+		unset($data['nik']);
+		$this->mailbox_model->insert($data);
+		redirect('mailbox');
+	}
+
 	public function baca_pesan($kat = 1, $id)
 	{
 		$this->web_komentar_model->komentar_lock($id, 1);
@@ -85,16 +116,16 @@ class Mailbox extends Admin_Controller {
 		$this->load->view('footer');
 	}
 
-	public function search()
+	public function search($kat = 1)
 	{
 		$cari = $this->input->post('cari');
 		if ($cari != '')
 			$_SESSION['cari'] = $cari;
 		else unset($_SESSION['cari']);
-		redirect('mailbox');
+		redirect("mailbox/index/{$kat}");
 	}
 
-	public function filter_status()
+	public function filter_status($kat = 1)
 	{
 		$status = $this->input->post('status');
 		if ($status != 0){
@@ -110,7 +141,7 @@ class Mailbox extends Admin_Controller {
 			unset($_SESSION['filter_status']);
 			unset($_SESSION['filter_archived']);
 		} 
-		redirect('mailbox');
+		redirect("mailbox/index/{$kat}");
 	}
 
 	public function filter_nik($kat = 1)

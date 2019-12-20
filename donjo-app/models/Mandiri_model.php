@@ -211,10 +211,6 @@
 			->limit($result_count, $offset);
 		$data = $this->db->get()->result_array();
 
-		$pendaftar_mandiri = array();
-		if ($page == 1) {
-			$pendaftar_mandiri[] = array('id' => 0, 'text' => 'Semua Pendaftar Layanan Mandiri');
-		}
 		foreach ($data as $row ) {
 			$nama = addslashes($row['nama']);
 			$alamat = addslashes("Alamat: RT-{$row['rt']}, RW-{$row['rw']} {$row['dusun']}");

@@ -18,7 +18,7 @@
 			$cari = $_SESSION['cari'];
 			$kw = $this->db->escape_like_str($cari);
 			$kw = '%' .$kw. '%';
-			$search_sql= " AND (komentar LIKE '$kw' OR komentar LIKE '$kw')";
+			$search_sql= " AND (komentar LIKE '$kw' OR subjek LIKE '$kw')";
 			return $search_sql;
 		}
 	}

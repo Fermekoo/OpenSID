@@ -13,8 +13,9 @@
 				<div class="col-md-9">
 					<div class="box box-info">
             <div class="box-header with-border">
+							<a href="<?= site_url('mailbox/form') ?>" class="btn btn-social btn-flat btn-success btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Tulis Pesan"><i class="fa fa-plus"></i> Tulis Pesan</a>
 							<a href="#confirm-delete" title="Arsipkan Data" <?php if(!$filter_archived) : ?>onclick="deleteAllBox('mainform','<?=site_url("mailbox/archive_all/$kat/$p/$o")?>')"<?php endif ?> class="btn btn-social btn-flat btn-danger btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block hapus-terpilih" <?php $filter_archived and print('disabled') ?>><i class='fa fa-file-archive-o'></i> Arsipkan Data Terpilih</a>
-							<a href="<?= site_url("mailbox/clear/$kat/$p/$o") ?>" class="btn btn-social btn-flat bg-purple btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"><i class="fa fa-refresh"></i>Bersihkan</a>
+							<a href="<?= site_url("mailbox/clear/$kat/$p/$o") ?>" class="btn btn-social btn-flat bg-purple btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"><i class="fa fa-refresh"></i>Bersihkan Filter</a>
 						</div>
 						<div class="box-body">
 							<div class="row">
@@ -24,7 +25,7 @@
 											<div class="row">
 												<div class="col-sm-9">
 													<div class="form-group">
-														<select class="form-control input-sm select2-nik-ajax select2-nik-ajax" id="nik" style="width:100%" name="nik" data-url="<?= site_url('mailbox/list_pendaftar_mandiri_ajax')?>" onchange="formAction('mainform', '<?=site_url('mailbox/filter_nik')?>')">
+														<select class="form-control input-sm select2-nik-ajax" id="nik" style="width:100%" name="nik" data-url="<?= site_url('mailbox/list_pendaftar_mandiri_ajax')?>" onchange="formAction('mainform', '<?=site_url("mailbox/filter_nik/$kat")?>')">
 															<?php if ($individu): ?>
 																<option value="<?= $individu['nik']?>" selected><?= $individu['nik'] .' - '.$individu['nama']?></option>
 																<?php else : ?>
@@ -33,7 +34,7 @@
 														</select>
 													</div>
 													<div class="form-group">
-														<select class="form-control input-sm " name="status" onchange="formAction('mainform','<?=site_url('mailbox/filter_status')?>')">
+														<select class="form-control input-sm " name="status" onchange="formAction('mainform','<?=site_url("mailbox/filter_status/$kat")?>')">
 															<option value="">Semua</option>
 															<option value="1" <?php if ($filter_status==1): ?>selected<?php endif ?>>Sudah Dibaca</option>
 															<option value="2" <?php if ($filter_status==2): ?>selected<?php endif ?>>Belum Dibaca</option>
@@ -45,9 +46,9 @@
 												<div class="col-sm-3">
 													<div class="box-tools">
 														<div class="input-group input-group-sm pull-right">
-															<input name="cari" id="cari" class="form-control" placeholder="Cari..." type="text" value="<?=html_escape($cari)?>" onkeypress="if (event.keyCode == 13):$('#'+'mainform').attr('action','<?=site_url('mailbox/search')?>');$('#'+'mainform').submit();endif;">
+															<input name="cari" id="cari" class="form-control" placeholder="Cari..." type="text" value="<?=html_escape($cari)?>" onkeypress="if (event.keyCode == 13):$('#'+'mainform').attr('action','<?=site_url("mailbox/search/$kat")?>');$('#'+'mainform').submit();endif;">
 															<div class="input-group-btn">
-																<button type="submit" class="btn btn-default" onclick="$('#'+'mainform').attr('action', '<?=site_url("mailbox/search")?>');$('#'+'mainform').submit();"><i class="fa fa-search"></i></button>
+																<button type="submit" class="btn btn-default" onclick="$('#'+'mainform').attr('action', '<?=site_url("mailbox/search/$kat")?>');$('#'+'mainform').submit();"><i class="fa fa-search"></i></button>
 															</div>
 														</div>
 													</div>
@@ -63,11 +64,11 @@
 																	<th>No</th>
 																	<th>Aksi</th>
 																	<?php if ($o==2): ?>
-                                    <th><a href="<?= site_url("mailbox/index/$kat/$p/1")?>">Pengirim <i class='fa fa-sort-asc fa-sm'></i></a></th>
+                                    <th><a href="<?= site_url("mailbox/index/$kat/$p/1")?>"><?= $owner ?> <i class='fa fa-sort-asc fa-sm'></i></a></th>
                                   <?php elseif ($o==1): ?>
-                                    <th><a href="<?= site_url("mailbox/index/$kat/$p/2")?>">Pengirim <i class='fa fa-sort-desc fa-sm'></i></a></th>
+                                    <th><a href="<?= site_url("mailbox/index/$kat/$p/2")?>"><?= $owner ?> <i class='fa fa-sort-desc fa-sm'></i></a></th>
                                   <?php else: ?>
-                                    <th><a href="<?= site_url("mailbox/index/$kat/$p/1")?>">Pengirim <i class='fa fa-sort fa-sm'></i></a></th>
+                                    <th><a href="<?= site_url("mailbox/index/$kat/$p/1")?>"><?= $owner ?> <i class='fa fa-sort fa-sm'></i></a></th>
 																	<?php endif; ?>
 
 																	<?php if ($o==4): ?>
