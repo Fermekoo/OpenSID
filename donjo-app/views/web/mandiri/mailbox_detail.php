@@ -1,3 +1,4 @@
+<?php  if(!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <section class="content no-padding">
 	<?php if($pesan) : ?>
 		<form action="<?= site_url('mailbox_web/form') ?>" class="form-horizontal" method="post">
