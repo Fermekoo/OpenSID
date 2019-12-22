@@ -90,7 +90,7 @@
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
-							<h4>Dokumen Yang Dibutuhkan untuk Layanan Permohonan Surat</h4>
+							<h4>Persyaratan Permohonan Surat</h4>
 							<div class="box-tools">
 								<button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#surat"><i class="fa fa-minus"></i></button>
 							</div>
