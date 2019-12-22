@@ -105,7 +105,7 @@
 																		<td><?=$data['no']?></td>
 																		<td nowrap>
                                       <?php if($data['is_archived'] == 0) : ?>
-																				<a href="#" data-href="<?=site_url("mailbox/archive/$kat/$p/$o/$data[id]")?>" class="btn bg-maroon btn-flat btn-sm"  title="Hapus" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-file-archive-o"></i></a>
+																				<a href="#" data-href="<?=site_url("mailbox/archive/$kat/$p/$o/$data[id]")?>" class="btn bg-maroon btn-flat btn-sm"  title="Arsipkan" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-file-archive-o"></i></a>
 																			<?php endif ?>
                                       <a href="<?=site_url("mailbox/baca_pesan/{$kat}/{$data['id']}")?>" class="btn bg-navy btn-flat btn-sm" title="Lihat detail pesan"><i class="fa fa-list">&nbsp;</i></a>
                                       <?php if($kat != 2 AND $data['is_archived'] != 1) : ?>
