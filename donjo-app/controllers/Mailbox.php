@@ -29,7 +29,7 @@ class Mailbox extends Admin_Controller {
 		$data['o'] = $o;
 		$data['kat'] = $kat;
 
-		$list_session = array('cari', 'filter_status', 'filter_nik', 'filter_archived', 'per_page');
+		$list_session = array('cari', 'filter_status', 'filter_nik', 'filter_archived');
 
 		foreach ($list_session as $session) {
 			$data[$session] = $this->session->userdata($session) ?: '';
@@ -39,23 +39,17 @@ class Mailbox extends Admin_Controller {
 			$data['individu'] = $this->mandiri_model->get_pendaftar_mandiri($nik);
 		}
 
+		if ($per_page = $this->input->post('per_page')) {
+			$this->session->set_userdata('per_page', $per_page);
+		}
+
+		$data['per_page'] = $_SESSION['per_page'];
 		$data['paging'] = $this->web_komentar_model->paging($p, $o, $kat);
 		$data['main'] = $this->web_komentar_model->list_data($o, $data['paging']->offset, $data['paging']->per_page, $kat);
 		$data['owner'] = $kat == 1 ? 'Pengirim' : 'Penerima';
 		$data['keyword'] = $this->web_komentar_model->autocomplete();
 		$data['submenu'] = $this->mailbox_model->list_menu();
-		
-		foreach ($data['submenu'] as $id => $value) 
-		{
-			if ($kat == $id)
-			{
-				$session = array(
-					'submenu' => $id
-				);
-				
-				$this->session->set_userdata($session);
-			}
-		}
+		$_SESSION['submenu'] = $kat;
 
 		$header = $this->header_model->get_data();
 		$nav['act'] = 14;
@@ -74,7 +68,7 @@ class Mailbox extends Admin_Controller {
 			$data['individu'] = $this->mandiri_model->get_pendaftar_mandiri($nik);
 		}
 		if (!empty($subjek = $this->input->post('subjek'))) {
-			$data['subjek'] = "Balasan: {$subjek}";
+			$data['subjek'] = $subjek;
 		}
 		$data['form_action'] = site_url("mailbox/kirim_pesan");
 
@@ -92,7 +86,7 @@ class Mailbox extends Admin_Controller {
 	{
 		$data = $this->input->post();
 		$data['tipe'] = 2;
-		$data['status'] = 1;
+		$data['status'] = 2;
 		unset($data['nik']);
 		$this->mailbox_model->insert($data);
 		redirect('mailbox');
@@ -100,10 +94,13 @@ class Mailbox extends Admin_Controller {
 
 	public function baca_pesan($kat = 1, $id)
 	{
-		$this->web_komentar_model->komentar_lock($id, 1);
-		unset($_SESSION['success']);
+		if ($kat == 1) {
+			$this->web_komentar_model->komentar_lock($id, 1);
+			unset($_SESSION['success']);
+		}
 		
 		$data['kat'] = $kat;
+		$data['owner'] = $kat == 1 ? 'Pengirim' : 'Penerima';
 		$data['pesan'] = $this->web_komentar_model->get_komentar($id);
 		$data['tipe_mailbox'] = $this->mailbox_model->get_kat_nama($kat); 
 		$header = $this->header_model->get_data();
@@ -208,15 +205,15 @@ class Mailbox extends Admin_Controller {
 		redirect("mailbox/index/$kat/$p/$o");
 	}
 
-	public function komentar_lock($id = '')
+	public function pesan_read($id = '')
 	{
 		$this->web_komentar_model->komentar_lock($id, 1);
-		redirect("mailbox/index/$p/$o");
+		redirect("mailbox");
 	}
 
-	public function komentar_unlock($id = '')
+	public function pesan_unread($id = '')
 	{
 		$this->web_komentar_model->komentar_lock($id, 2);
-		redirect("mailbox/index/$p/$o");
+		redirect("mailbox");
 	}
 }

@@ -11,7 +11,7 @@
     <td><h4><a href="<?= site_url();?>first/mandiri/1/1" class=""><button type="button" class="btn btn-primary btn-block"><i class="fa fa-user"></i>Profil</button></a> </h4></td>
   </tr>
   <tr>
-    <td><h4><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#lapor_modal"><i class="fa fa-bullhorn"></i>Lapor</button></h4></td>
+    <td><h4><a href="<?= site_url();?>first/mandiri/1/3"><button type="button" class="btn btn-primary btn-block"><i class="fa fa-envelope-o"></i>Kotak Pesan</button></a></h4></td>
   </tr>
   <tr>
     <td><h4><a href="<?= site_url();?>first/mandiri/1/5" class=""><button type="button" class="btn btn-primary btn-block"><i class="fa fa-file"></i>Permohonan Surat</button></a></h4></td>

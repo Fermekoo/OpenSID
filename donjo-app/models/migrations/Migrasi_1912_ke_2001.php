@@ -319,7 +319,7 @@ class Migrasi_1912_ke_2001 extends CI_model {
 	private function mailbox()
 	{
 		$modul_mailbox = array(
-			'modul' => 'Mailbox',
+			'modul' => 'Kotak Pesan',
 			'url' => 'mailbox/clear'
 		);
 

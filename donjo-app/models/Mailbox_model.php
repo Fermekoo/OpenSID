@@ -1,9 +1,10 @@
-<?php class Mailbox_model extends CI_Model {
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+class Mailbox_model extends CI_Model {
 
 	/**
-	 * Gunakan model ini untuk memindahkan semua method terkait laporan layanan mandiri.
-	 * Saat ini laporan layanan mandiri masih bercampur dengan komentar artikel, dan
-	 * seharusnya dipisah.
+	 * Gunakan model ini untuk memindahkan semua method terkait mailbox layanan mandiri.
+	 * Dimana layanan mailbox memiliki perlakuan yang sepenuhnya berbeda dengan komentar web
 	 */
 	public function __construct()
 	{
@@ -35,6 +36,66 @@
 		return $data;
 	}
 
+	/**
+	 * Tipe 1: Inbox untuk admin, Outbox untuk pengguna layanan mandiri
+	 * Tipe 2: Outbox untuk admin, Inbox untuk pengguna layanan mandiri
+	 */
 
+	public function get_inbox_user($nik)
+	{
+		$outp = $this->db
+			->where('email', $nik)
+			->where('tipe', 2)
+			->where('id_artikel', 775)
+			->from('komentar')
+			->order_by('id', 'DESC')
+			->get()
+			->result_array();
+		$j = 1;
+		for ($i=0; $i < count($outp); $i++) 
+		{ 
+			$outp[$i]['no'] = $j++;
+		}
+		return $outp;
+	}
+
+	public function get_outbox_user($nik)
+	{
+		$outp = $this->db
+			->where('email', $nik)
+			->where('tipe', 1)
+			->where('id_artikel', 775)
+			->from('komentar')
+			->order_by('id','DESC')
+			->get()
+			->result_array();
+		$j = 1;
+		for ($i=0; $i < count($outp); $i++) 
+		{ 
+			$outp[$i]['no'] = $j++;
+		}
+		return $outp;
+	}
+
+	public function get_pesan($nik, $id)
+	{
+		return $this->db
+			->where('email', $nik)
+			->where('id', $id)
+			->where('id_artikel', 775)
+			->from('komentar')
+			->get()
+			->row_array();
+	}
+
+	public function ubah_status_pesan($nik, $id, $status)
+	{
+		return $this->db
+			->where('email', $nik)
+			->where('id', $id)
+			->where('tipe', 2)
+			->where('id_artikel', 775)
+			->update('komentar', array('status' => $status));
+	}
 }
 ?>

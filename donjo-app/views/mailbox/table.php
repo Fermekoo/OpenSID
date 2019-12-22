@@ -1,9 +1,9 @@
 <div class="content-wrapper">
 	<section class="content-header">
-		<h1>Mailbox</h1>
+		<h1>Kotak Pesan</h1>
 		<ol class="breadcrumb">
 			<li><a href="<?= site_url('hom_sid')?>"><i class="fa fa-home"></i> Home</a></li>
-			<li class="active">Mailbox</li>
+			<li class="active">Kotak Pesan</li>
 		</ol>
 	</section>
 	<section class="content" id="maincontent">
@@ -107,12 +107,14 @@
                                       <?php if($data['is_archived'] == 0) : ?>
 																				<a href="#" data-href="<?=site_url("mailbox/archive/$kat/$p/$o/$data[id]")?>" class="btn bg-maroon btn-flat btn-sm"  title="Hapus" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-file-archive-o"></i></a>
 																			<?php endif ?>
-                                      <a href="<?=site_url("mailbox/baca_pesan/{$kat}/{$data['id']}")?>" class="btn bg-navy btn-flat btn-sm" title="Baca pesan"><i class="fa fa-list">&nbsp;</i></a>
-                                      <?php if ($data['status'] == '1'): ?>
-																				<a href="<?=site_url('mailbox/komentar_unlock/'.$data['id'])?>" class="btn bg-navy btn-flat btn-sm" title="Tandai sebagai belum dibaca"><i class="fa fa-envelope-o"></i></a>
-																				<?php else : ?>
-																					<a href="<?=site_url('mailbox/komentar_lock/'.$data['id'])?>" class="btn bg-navy btn-flat btn-sm" title="Tandai sebagai sudah dibaca"><i class="fa fa-envelope-open-o"></i></a>
-                                      <?php endif; ?>
+                                      <a href="<?=site_url("mailbox/baca_pesan/{$kat}/{$data['id']}")?>" class="btn bg-navy btn-flat btn-sm" title="Lihat detail pesan"><i class="fa fa-list">&nbsp;</i></a>
+                                      <?php if($kat != 2 AND $data['is_archived'] != 1) : ?>
+																				<?php if ($data['status'] == 1): ?>
+																					<a href="<?=site_url('mailbox/pesan_unread/'.$data['id'])?>" class="btn bg-navy btn-flat btn-sm" title="Tandai sebagai belum dibaca"><i class="fa fa-envelope-o"></i></a>
+																					<?php else : ?>
+																						<a href="<?=site_url('mailbox/pesan_read/'.$data['id'])?>" class="btn bg-navy btn-flat btn-sm" title="Tandai sebagai sudah dibaca"><i class="fa fa-envelope-open-o"></i></a>
+																				<?php endif; ?>
+																			<?php endif ?>
                                     </td>
                                     <td nowrap><?=$data['owner']?></td>
                                     <td><?=$data['email']?></td>
@@ -130,7 +132,7 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="dataTables_length">
-                          <form id="paging" action="<?= site_url("mailbox")?>" method="post" class="form-horizontal">
+                          <form id="paging" action="<?= site_url("mailbox/index/$kat")?>" method="post" class="form-horizontal">
                             <label>
                               Tampilkan
                               <select name="per_page" class="form-control input-sm" onchange="$('#paging').submit()">

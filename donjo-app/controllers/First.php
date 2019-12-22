@@ -44,7 +44,8 @@ class First extends Web_Controller {
 		$this->load->model('keluar_model');
 		$this->load->model('referensi_model');
 		$this->load->model('keuangan_model');
-    $this->load->model('web_dokumen_model');
+		$this->load->model('web_dokumen_model');
+		$this->load->model('mailbox_model');
 		$this->load->model('lapor_model');
 	}
 
@@ -148,7 +149,7 @@ class First extends Web_Controller {
 			$this->load->view('program_bantuan/kartu_peserta',$data);
 	}
 
-	public function mandiri($p=1, $m=0)
+	public function mandiri($p=1, $m=0, $kat=1)
 	{
 		if ($_SESSION['mandiri'] != 1)
 		{
@@ -159,6 +160,7 @@ class First extends Web_Controller {
 		$data['p'] = $p;
 		$data['menu_surat_mandiri'] = $this->surat_model->list_surat_mandiri();
 		$data['m'] = $m;
+		$data['kat'] = $kat;
 
 		$this->_get_common_data($data);
 
@@ -178,6 +180,13 @@ class First extends Web_Controller {
 				break;
 			case 2:
 				$data['surat_keluar'] = $this->keluar_model->list_data_perorangan($_SESSION['id']);
+				break;
+			case 3:
+				$inbox = $this->mailbox_model->get_inbox_user($_SESSION['nik']);
+				$outbox = $this->mailbox_model->get_outbox_user($_SESSION['nik']);
+				$data['main_list'] = $kat == 1 ? $inbox : $outbox;
+				$data['submenu'] = $this->mailbox_model->list_menu();
+				$_SESSION['mailbox'] = $kat;
 				break;
 			case 4:
 				$this->load->model('program_bantuan_model','pb');
