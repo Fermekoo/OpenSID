@@ -18,17 +18,18 @@ class Permohonan_surat extends Web_Controller {
 	public function form($id_permohonan='')
 	{
 		$data = $this->input->post();
-		$surat = $this->db->where('id', $id_permohonan ?: $data['id_surat'])
+		if ($id_permohonan)
+		{
+			$data['permohonan'] = $this->permohonan_surat_model->get_permohonan($id_permohonan);
+			$data['isian_form'] = json_encode($this->permohonan_surat_model->ambil_isi_form($data['permohonan']['isian_form']));
+			$data['id_surat'] = $data['permohonan']['id_surat'];
+		}
+		$surat = $this->db->where('id', $data['id_surat'])
 			->get('tweb_surat_format')
 			->row_array();
 		$data['url'] = $surat['url_surat'];
 		$url = $data['url'];
 
-		if ($id_permohonan)
-		{
-			$data['permohonan'] = $this->permohonan_surat_model->get_permohonan($id_permohonan);
-			$data['isian_form'] = json_encode($this->permohonan_surat_model->ambil_isi_form($data['permohonan']['isian_form']));
-		}
 		$data['list_dokumen'] = $this->penduduk_model->list_dokumen($_SESSION['id']);
 		$data['individu'] = $this->surat_model->get_penduduk($_SESSION['id']);
 		$data['anggota'] = $this->keluarga_model->list_anggota($data['individu']['id_kk']);
