@@ -131,14 +131,14 @@
 	</section>
 </div>
 
-<div class="form-surat">
+<div class="form-surat" id="periksa-permohonan">
 	<?php $this->load->view($form_surat); ?>
 </div>
 
 <script type="text/javascript">
   $(document).ready(function() {
     // Di form surat ubah isian admin menjadi disabled
-    $(".readonly-periksa").attr('disabled', true);
+    $("#periksa-permohonan .readonly-periksa").attr('disabled', true);
 		setTimeout(function() {isi_form();}, 100);
   });
 

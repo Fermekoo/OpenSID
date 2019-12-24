@@ -5,7 +5,7 @@
   a.btn { color: #fff; }
   .unread > td { background-color: #ffeeaa !important; }
 </style>
-<div class="content-wrapper">
+<div class="content-wrapper" id="wrapper-mandiri">
   <section class="content">
     <div class="row">
       <div class="col-md-3">
@@ -60,8 +60,8 @@
 <script>
   $(document).ready(function() {
     // Di form surat ubah isian admin menjadi disabled
-    $(".readonly-permohonan").attr('disabled', true);
-    $("form#validasi").removeAttr('target');
+    $("#wrapper-mandiri .readonly-permohonan").attr('disabled', true);
+    $("#wrapper-mandiri form#validasi").removeAttr('target');
   });
 </script>
 

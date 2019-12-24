@@ -22,7 +22,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
     // Di form surat ubah isian admin menjadi disabled
-    $(".readonly-periksa").attr('disabled', true);
+    $("#periksa-permohonan .readonly-periksa").attr('disabled', true);
     if ($('#isian_form').val())
     {
       setTimeout(function() {isi_form();}, 100);
