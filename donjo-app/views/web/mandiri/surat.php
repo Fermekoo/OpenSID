@@ -9,24 +9,30 @@
   const LOKASI_DOKUMEN = '<?= base_url().LOKASI_DOKUMEN ?>';
 </script>
 
-<form class="contact_form" id="validasi" action="<?= site_url('permohonan_surat/form')?>" method="POST" enctype="multipart/form-data">
+<form class="contact_form" id="validasi" action="<?= site_url('permohonan_surat/form/'.$permohonan[id])?>" method="POST" enctype="multipart/form-data">
 
   <div class="box-header with-border">
     <span style="font-size: x-large"><strong>LAYANAN PERMOHONAN SURAT</strong></span>
     <button type="submit" class="btn btn-primary pull-right" id="isi_form"><i class="fa fa-sign-in"></i>Isi Form</button>
     <input type="hidden" name="pemohon" value="<?= $_SESSION['nama']?>"/>
     <input type="hidden" readonly="readonly" name="nik" value="<?= $_SESSION['nik']?>"/>
+    <input type="hidden" name="id_permohonan" value="<?= $permohonan['id']?>"/>
   </div>
 
   <div class="box-body">
     <div class="form form-horizontal">
+      <?php if ($permohonan): ?>
+        <div class="alert alert-warning" role="alert">
+          <span style="font-size: larger;">Lengkapi permohonan surat tanggal <?= $permohonan['updated_at']?></span>
+        </div>
+      <?php endif; ?>
       <div class="form-group">
         <label for="nama_surat" class="col-sm-3 control-label">Jenis Surat Yang Dimohon</label>
         <div class="col-sm-6 col-lg-8">
           <select class="form-control required input-sm" name="id_surat" id="id_surat">
-            <option> -- Pilih Jenis Surat -- </option>
+            <option value=""> -- Pilih Jenis Surat -- </option>
             <?php foreach ($menu_surat_mandiri AS $data): ?>
-              <option value="<?= $data['id']?>"><?= $data['nama']?></option>
+              <option value="<?= $data['id']?>" <?php selected($data['id'], $permohonan['id_surat'])?>><?= $data['nama']?></option>
             <?php endforeach;?>
           </select>
         </div>
@@ -141,13 +147,6 @@
 </div>
 <script type='text/javascript'>
   $(document).ready(function(){
-    $('#surat-table').DataTable({
-    	"dom": 'rt<"bottom"p><"clear">',
-    	"destroy": true,
-      "paging": false,
-      "ordering": false
-    });
-
     $('#id_surat').change(function(){
       var el = document.getElementById('id_surat');
       var nama_surat = el.options[el.selectedIndex].innerHTML;
@@ -181,7 +180,13 @@
           console.log(err);
         }
       })
-   });
+    });
+    
+    if ($('input[name=id_permohonan]').val())
+    {
+      $('#id_surat').attr('disabled','disabled');
+      $('#id_surat').change();
+    }
 
  });
  </script>

@@ -14,7 +14,7 @@
     <td><h4><a href="<?= site_url();?>first/mandiri/1/3"><button type="button" class="btn btn-primary btn-block"><i class="fa fa-envelope-o"></i>Kotak Pesan</button></a></h4></td>
   </tr>
   <tr>
-    <td><h4><a href="<?= site_url();?>first/mandiri/1/5" class=""><button type="button" class="btn btn-primary btn-block"><i class="fa fa-file"></i>Permohonan Surat</button></a></h4></td>
+    <td><h4><a href="<?= site_url();?>first/mandiri_surat" class=""><button type="button" class="btn btn-primary btn-block"><i class="fa fa-file"></i>Permohonan Surat</button></a></h4></td>
   </tr>
   <tr>
     <td><h4><a href="<?= site_url();?>first/mandiri/1/2" class=""><button type="button" class="btn btn-primary btn-block"><i class="fa fa-history"></i>Riwayat Layanan / Status Permohonan Surat</button></a> </h4></td>

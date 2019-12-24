@@ -11,12 +11,41 @@
 			</li>
 		</ul>
 		<div class="tab-content">
-			<div class="tab-pane" id="permohonan_surat">
-				permohonan surat
+			<div class="tab-pane" id="permohonan_surat" style="margin-top: 20px;">
+				<p><strong>DAFTAR PERMOHONAN SURAT</strong></>
+				<table class="table table-striped datatable-polos" id="list-permohonan">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th nowrap>Aksi</th>
+							<th>Nama Penduduk</th>
+							<th>Jenis Surat</th>
+							<th>Status</th>
+							<th>Tanggal Kirim</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php $no = 1; ?>
+						<?php foreach($permohonan as $data): ?>
+							<tr>
+								<td align="center" width="2"><?= $no++ ?></td>
+								<td nowrap>
+									<?php if ($data['status_id'] == 1): ?>
+										<a href="<?= site_url("first/mandiri_surat/$data[id]")?>" title="Lengkapi Surat" class="btn bg-orange btn-flat btn-sm"><i class="fa fa-edit"></i></a>
+									<?php endif; ?>								
+								</td>
+								<td><?=$data['nama']?></td>
+								<td><?=$data['jenis_surat']?></td>
+								<td><?=$data['status']?></td>
+								<td nowrap><?=tgl_indo2($data['created_at'])?></td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
 			</div>	
- 			<div class="tab-pane active" id="daftar_rekam">
-				<span style="font-size: x-large"><strong>DAFTAR REKAM CETAK SURAT</strong></span>
-				<table class="table table-striped" id="list-rekam">
+ 			<div class="tab-pane active" id="daftar_rekam" style="margin-top: 20px;">
+				<p><strong>DAFTAR REKAM CETAK SURAT</strong></>
+				<table class="table table-striped datatable-polos" id="list-rekam">
 					<thead>
 						<tr>
 							<th>No</th>
@@ -39,10 +68,6 @@
 						<?php endforeach; ?>
 					</tbody>
 				</table>
-
-				<div class="teks">
-					<?php //$this->load->view('surat/signature.php');?>
-				</div>
 			</div>
 		</div>
 	</div>

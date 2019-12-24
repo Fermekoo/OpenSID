@@ -179,7 +179,9 @@ class First extends Web_Controller {
 				$data['list_dokumen'] = $this->penduduk_model->list_dokumen($_SESSION['id']);
 				break;
 			case 2:
+				$this->load->model('permohonan_surat_model');
 				$data['surat_keluar'] = $this->keluar_model->list_data_perorangan($_SESSION['id']);
+				$data['permohonan'] = $this->permohonan_surat_model->list_permohonan_perorangan($_SESSION['id']);
 				break;
 			case 3:
 				$inbox = $this->mailbox_model->get_inbox_user($_SESSION['nik']);
@@ -198,6 +200,24 @@ class First extends Web_Controller {
 			default:
 				break;
 		}
+
+		$this->load->view('web/mandiri/layout.mandiri.php', $data);
+	}
+
+	public function mandiri_surat($id_permohonan='')
+	{
+		if ($_SESSION['mandiri'] != 1)
+		{
+			redirect('first');
+		}
+
+		$this->load->model('permohonan_surat_model');
+		$data = $this->includes;
+		$data['menu_surat_mandiri'] = $this->surat_model->list_surat_mandiri();
+		$data['m'] = 5;
+		$data['permohonan'] = $this->permohonan_surat_model->get_permohonan($id_permohonan);
+		$this->_get_common_data($data);
+		$data['list_dokumen'] = $this->penduduk_model->list_dokumen($_SESSION['id']);
 
 		$this->load->view('web/mandiri/layout.mandiri.php', $data);
 	}

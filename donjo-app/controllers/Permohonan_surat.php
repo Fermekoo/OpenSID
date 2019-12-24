@@ -15,15 +15,20 @@ class Permohonan_surat extends Web_Controller {
 		$this->load->model('permohonan_surat_model');
 	}
 
-	public function form()
+	public function form($id_permohonan='')
 	{
 		$data = $this->input->post();
-		$surat = $this->db->where('id', $data['id_surat'])
+		$surat = $this->db->where('id', $id_permohonan ?: $data['id_surat'])
 			->get('tweb_surat_format')
 			->row_array();
 		$data['url'] = $surat['url_surat'];
 		$url = $data['url'];
 
+		if ($id_permohonan)
+		{
+			$data['permohonan'] = $this->permohonan_surat_model->get_permohonan($id_permohonan);
+			$data['isian_form'] = json_encode($this->permohonan_surat_model->ambil_isi_form($data['permohonan']['isian_form']));
+		}
 		$data['list_dokumen'] = $this->penduduk_model->list_dokumen($_SESSION['id']);
 		$data['individu'] = $this->surat_model->get_penduduk($_SESSION['id']);
 		$data['anggota'] = $this->keluarga_model->list_anggota($data['individu']['id_kk']);
@@ -36,14 +41,20 @@ class Permohonan_surat extends Web_Controller {
 		$this->load->view('web/mandiri/layout.mandiri.php', $data);
 	}
 
-	public function kirim()
+	public function kirim($id_permohonan='')
 	{
 		$post = $this->input->post();
 		$data = array();
 		$data['id_pemohon'] = $post['nik'];
 		$data['id_surat'] = $post['id_surat'];
 		$data['isian_form'] = json_encode($post);
-		$this->permohonan_surat_model->insert($data);
+		if ($id_permohonan)
+		{
+			$data['status'] = 0; // kembalikan ke status 'sedang diperiksa'
+			$this->permohonan_surat_model->update($id_permohonan, $data);
+		}
+		else
+			$this->permohonan_surat_model->insert($data);
 		redirect('first/mandiri/1/2');
 	}
 

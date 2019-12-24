@@ -12,6 +12,22 @@
 		return $outp;
 	}
 
+  public function delete($id_permohonan)
+  {
+  	$outp = $this->db->where('id', $id_permohonan)
+  		->delete('permohonan_surat');
+  	if (!$outp) 
+  		$this->session->set_userdata('success', -1);
+  }
+
+	public function update($id_permohonan, $data)
+	{
+		$outp = $this->db
+			->where('id', $id_permohonan)
+			->update('permohonan_surat', $data);
+		return $outp;
+	}
+
 	public function autocomplete()
 	{
 		$data = $this->db->select('n.nik')
@@ -116,6 +132,34 @@
 		return $data;
 	}
 
+	public function list_permohonan_perorangan($id_pemohon)
+	{
+		$data = $this->db
+			->select('u.*, u.status as status_id, n.nama AS nama, n.nik AS nik, s.nama as jenis_surat')
+			->where('id_pemohon', $id_pemohon)
+			->from('permohonan_surat u')
+			->join('tweb_penduduk n', 'u.id_pemohon = n.id', 'left')
+			->join('tweb_surat_format s', 'u.id_surat = s.id', 'left')
+			->order_by('updated_at', 'DESC')
+			->get()->result_array();
+		for ($i=0; $i<count($data); $i++)
+		{
+			$data[$i]['no'] = $j + 1;
+			$data[$i]['status'] = $this->referensi_model->list_kode_array(STATUS_PERMOHONAN)[$data[$i]['status']];
+			$j++;
+		}
+		return $data;
+	}
+
+	public function get_permohonan($id_permohonan)
+	{
+		$data = $this->db
+			->where('id', $id_permohonan)
+			->get('permohonan_surat')
+			->row_array();
+		return $data;
+	}
+
 	public function list_data_status($id)
 	{
 		$this->db->select('id, status');
@@ -132,6 +176,17 @@
 
 		if ($outp) $_SESSION['success'] = 1;
 		else $_SESSION['success'] = -1;
+	}
+
+	public function ambil_isi_form($isian_form)
+	{
+		$isian_form = json_decode($isian_form, true);
+		$hapus = array('url_surat', 'url_remote', 'nik', 'id_surat', 'nomor', 'pilih_atas_nama', 'pamong', 'pamong_nip', 'jabatan', 'pamong_id');
+		foreach ($hapus as $kolom)
+		{
+			unset($isian_form[$kolom]);
+		}
+		return $isian_form;
 	}
 
 }

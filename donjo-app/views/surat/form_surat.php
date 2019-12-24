@@ -17,3 +17,23 @@
 	else
 	  include("surat/$nama_surat/$nama_surat.php");
 ?>
+<input id="isian_form" type="hidden" value='<?= $isian_form?>'>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    // Di form surat ubah isian admin menjadi disabled
+    $(".readonly-periksa").attr('disabled', true);
+		setTimeout(function() {isi_form();}, 100);
+  });
+
+  function isi_form()
+  {
+    var isian_form = JSON.parse($('#isian_form').val(), function(key, value)
+    {
+    	if (key)
+    	{
+	    	$('*[name=' + key + ']').val(value);
+    	}
+  	});
+	}
+</script>

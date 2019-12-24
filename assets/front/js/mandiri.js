@@ -13,7 +13,7 @@ function show_alert(type, title, content) {
 $(document).ready(function() {
 	$('#unggah_dokumen').validate();
 	
-	$('#list-rekam').DataTable({
+	$('.datatable-polos').DataTable({
 		'pageLength': 10,
 		'responsive': true,
 		'language': {

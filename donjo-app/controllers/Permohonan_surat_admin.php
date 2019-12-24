@@ -160,4 +160,12 @@ class Permohonan_surat_admin extends Admin_Controller {
     $data = $this->lapor_model->get_current_surat_nama($nama_surat);
     echo json_encode($data);
   }
+
+  public function delete($id_permohonan)
+  {
+		$this->session->unset_userdata('success');
+		$this->session->unset_userdata('error_msg');
+  	$this->permohonan_surat_model->delete($id_permohonan);
+		redirect($_SERVER['HTTP_REFERER']);
+  }
 }

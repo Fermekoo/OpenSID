@@ -74,7 +74,7 @@
 																				<a href="<?= site_url("{$this->controller}/update_status/$data[id]/4")?>" title="Status sudah diambil" class="btn bg-orange btn-flat btn-sm"><i class="fa fa-arrow-circle-right"></i></a>
 																			<?php endif; ?>
 																			<?php if (in_array($data['status_id'], array(0, 1))): ?>
-																				<a href="#" data-href="<?=site_url("{$this->controller}/delete/$p/$o/$data[id]")?>" class="btn bg-maroon btn-flat btn-sm"  title="Hapus" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
+																				<a href="#" data-href="<?=site_url("{$this->controller}/delete/$data[id]")?>" class="btn bg-maroon btn-flat btn-sm"  title="Hapus" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
 																			<?php endif; ?>
 																		</td>
 																		<td nowrap><?=$data['nik'];?></td>
