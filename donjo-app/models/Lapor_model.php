@@ -230,6 +230,24 @@
 		 return $data;
 	}
 
+	public function get_current_surat_id($id)
+	{
+		$this->db->select('*')
+				 ->from('tweb_surat_format')
+				 ->join('surat_format_ref', "tweb_surat_format.id = surat_format_ref.surat_format_id")
+				 ->join('ref_surat_format', "ref_surat_format.ref_surat_id = surat_format_ref.ref_surat_id")
+				 ->where('tweb_surat_format.id',$id);
+		 $query = $this->db->get();
+		 $data = $query->result_array();
+		 $j = $offset;
+		 for ($i=0; $i<count($data); $i++)
+		 {
+			 $data[$i]['no'] = $j + 1;
+			 $j++;
+		 }
+		 return $data;
+	}
+
 	public function get_surat_ref_all()
 	{
 		$this->db->select('*')
@@ -245,6 +263,16 @@
 				 ->join('surat_format_ref', "tweb_surat_format.id = surat_format_ref.surat_format_id")
 				 ->join('ref_surat_format', "ref_surat_format.ref_surat_id = surat_format_ref.ref_surat_id")
 				 ->where('surat_format_ref.surat_format_id',$id);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_current_dokumen_ref($id)
+	{
+		$this->db->select('*')
+				 ->from('dokumen')
+				 ->join('ref_surat_format', "dokumen.id_syarat = ref_surat_format.ref_surat_id")
+				 ->where('dokumen.id_pend',$id);
 		$query = $this->db->get();
 		return $query->result();
 	}

@@ -16,7 +16,7 @@
   {
   	$outp = $this->db->where('id', $id_permohonan)
   		->delete('permohonan_surat');
-  	if (!$outp) 
+  	if (!$outp)
   		$this->session->set_userdata('success', -1);
   }
 

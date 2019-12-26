@@ -51,7 +51,9 @@
       </div>
     </div>
   </div>
+</form>
 
+<form id="cek_dokumen" action="" method="POST" enctype="multipart/form-data">
   <div class="box box-info" style="margin-top: 10px;">
     <div class="box-header with-border">
       <h4 class="box-title">DOKUMEN / KELENGKAPAN PENDUDUK YANG DIBUTUHKAN</h4>
@@ -59,19 +61,41 @@
         <button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#surat"><i class="fa fa-minus"></i></button>
       </div>
     </div>
-    <div class="box-body" id="surat">
-      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-striped">
-        <thead>
+    <div class="box-body">
+      <table class="table table-striped table-bordered table-responsive" id="surat">
+        <tr>
+          <th width="2"><center>No</center></th>
+          <th><center>Nama Dokumen</center></th>
+          <th><center>Status Kelengkapan Dokumen</center></th>
+        </tr>
+        <?php $no=1; foreach($dokSyarats as $dokSyarat){?>
+          <?php
+          $pID = $dokSyarat['ref_surat_id'];
+          $checked = null;
+          $pri = null;
+          foreach($crtdokSyarat as $pri)
+          {
+            if ($pID == $pri->ref_surat_id)
+            {
+              $checked= ' checked="checked"';
+              break;
+            }
+          }
+          ?>
           <tr>
-            <th width="2">No</th>
-            <th width="7">Lengkap</th>
-            <th width="800">Nama Dokumen</th>
-            <th>&nbsp;</th>
+            <td align="center" width="2"><?= $no;?></td>
+            <td><?= $dokSyarat['ref_surat_nama']?></td>
+            <td><center><input type="checkbox" name="privlg[]" value="<?=$dokSyarat['ref_surat_id']?>"<?= $checked;?>></center></td>
           </tr>
-        </thead>
-        <tbody id="tbody-dokumen">
-        </tbody>
+          <?php $no++;
+        }?>
       </table>
+    </div>
+    <div class="box-footer">
+      <div class="col-xs-12">
+        <button type="reset" class="btn btn-social btn-flat btn-danger btn-sm invisible"><i class="fa fa-times"></i> Batal</button>
+        <button class="btn btn-social btn-flat btn-info btn-sm pull-right"><i class="fa fa-check"></i> Cek Kelengkapan Dokumen</button>
+      </div>
     </div>
   </div>
 </form>
@@ -121,6 +145,14 @@
                     <input type="hidden" name="id_pend" value="<?= $this->session->userdata('id'); ?>">
                   </div>
                   <div class="form-group">
+                  <select class="form-control required input-sm" name="id_syarat" id="id_syarat">
+                    <option> -- Pilih Jenis Dokumen -- </option>
+                    <?php foreach ($menu_dokumen_mandiri AS $data): ?>
+                      <option value="<?= $data['ref_surat_id']?>"><?= $data['ref_surat_nama']?></option>
+                    <?php endforeach;?>
+                  </select>
+                  </div>
+                  <div class="form-group">
                     <label for="file" >Pilih File:</label>
                     <div class="input-group input-group-sm">
                       <input type="text" class="form-control" id="file_path" name="satuan">
@@ -147,41 +179,27 @@
 </div>
 <script type='text/javascript'>
   $(document).ready(function(){
+
     $('#id_surat').change(function(){
-      var el = document.getElementById('id_surat');
-      var nama_surat = el.options[el.selectedIndex].innerHTML;
-      var url = "<?= site_url('first/ajax_table_surat_permohonan1')?>";
+      var id_surat = $(this).val();
+      var url = "<?= site_url('first/cek_syarat')?>";
 
       $.ajax({
         type: "POST",
         url: url,
         data: {
-          nama_surat: nama_surat
+          id_surat: id_surat
         },
         dataType: "JSON",
-        success: function(data)
-        {
-          var html;
-          if (data.length == 0)
-          {
-            html = "<tr><td colspan='3' align='center'>No Data Available</td></tr>";
-          }
-          for (var i = 0; i < data.length; i++)
-          {
-            html += "<tr>"
-  					+"<td>"+data[i].no+"</td>"
-  					+"<td>"+data[i].cb+"<center><input type='checkbox' name='lengkap[]'></center>"+"</td>"
-  					+"<td>"+data[i].ref_surat_nama+"</td>";
-          }
-          $('#tbody-dokumen').html(html);
+        success: function (data) {
+          console.log("Success!!");
         },
-        error: function(err, jqxhr, errThrown)
-        {
-          console.log(err);
+        error: function (xhr, desc, err) {
+          console.log('error');
         }
-      })
+      });
     });
-    
+
     if ($('input[name=id_permohonan]').val())
     {
       $('#id_surat').attr('disabled','disabled');

@@ -83,7 +83,6 @@ class Permohonan_surat_admin extends Admin_Controller {
 			->get('tweb_surat_format')
 			->row_array();
 		$data['url'] = $surat['url_surat'];
-		$data['jenis'] = $surat['nama'];
 		$url = $data['url'];
 
 		$data['list_dokumen'] = $this->penduduk_model->list_dokumen($_SESSION['id']);
@@ -92,6 +91,9 @@ class Permohonan_surat_admin extends Admin_Controller {
 		$this->get_data_untuk_form($url, $data);
 		$data['isian_form'] = json_encode($this->ambil_isi_form($periksa['isian_form']));
 		$data['periksa'] = $periksa;
+
+		$data['dokSyarats'] = $this->lapor_model->get_current_surat_id($periksa['id_surat']);
+		$data['crtdokSyarat'] = $this->lapor_model->get_current_dokumen_ref($_SESSION['id']);
 
 		$data['surat_url'] = rtrim($_SERVER['REQUEST_URI'], "/clear");
 		$data['form_action2'] = site_url("surat/periksa_doc/$id/$url");
@@ -109,21 +111,6 @@ class Permohonan_surat_admin extends Admin_Controller {
 	{
 		$this->permohonan_surat_model->update_status($id, array('status' => 1));
 		redirect('permohonan_surat_admin/index');
-	}
-
-	public function edit_status($id=0)
-	{
-		$data['list_status_permohonan'] = $this->referensi_model->list_kode_array(STATUS_PERMOHONAN);
-		$data['data'] = $this->permohonan_surat_model->list_data_status($id);
-		$data['form_action'] = site_url("permohonan_surat_admin/update_status/$id");
-		$this->load->view('mandiri/ajax_edit_status', $data);
-	}
-
-	public function update_status($id='', $status='')
-	{
-		$data = array('status' => $status ?: $this->input->post('status'));
-		$this->permohonan_surat_model->update_status($id, $data);
-		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	private function get_data_untuk_form($url, &$data)
@@ -153,13 +140,6 @@ class Permohonan_surat_admin extends Admin_Controller {
 		}
 		return $isian_form;
 	}
-
-	public function ajax_table_surat_permohonan()
-  {
-    $nama_surat = $this->input->post('nama_surat');
-    $data = $this->lapor_model->get_current_surat_nama($nama_surat);
-    echo json_encode($data);
-  }
 
   public function delete($id_permohonan)
   {

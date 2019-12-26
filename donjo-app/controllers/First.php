@@ -214,12 +214,24 @@ class First extends Web_Controller {
 		$this->load->model('permohonan_surat_model');
 		$data = $this->includes;
 		$data['menu_surat_mandiri'] = $this->surat_model->list_surat_mandiri();
+		$data['menu_dokumen_mandiri'] = $this->lapor_model->get_surat_ref_all();
 		$data['m'] = 5;
 		$data['permohonan'] = $this->permohonan_surat_model->get_permohonan($id_permohonan);
 		$this->_get_common_data($data);
 		$data['list_dokumen'] = $this->penduduk_model->list_dokumen($_SESSION['id']);
 
+		$data['dokSyarats'] = $this->lapor_model->get_current_surat_id($_SESSION['nama_surat']);
+		$data['crtdokSyarat'] = $this->lapor_model->get_current_dokumen_ref($_SESSION['id']);
+
 		$this->load->view('web/mandiri/layout.mandiri.php', $data);
+	}
+
+	public function cek_syarat()
+	{
+			$nama_surat = $this->input->post('id_surat');
+			$this->session->set_userdata('nama_surat', $nama_surat);
+			$data = $this->lapor_model->get_current_surat_id($nama_surat);
+			echo json_encode($data);
 	}
 
 	/*
@@ -617,12 +629,5 @@ class First extends Web_Controller {
 
 		echo json_encode($data);
 	}
-
-	public function ajax_table_surat_permohonan1()
-  {
-    $nama_surat = $this->input->post('nama_surat');
-    $data = $this->lapor_model->get_current_surat_nama($nama_surat);
-    echo json_encode($data);
-  }
 
 }
