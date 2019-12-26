@@ -75,7 +75,7 @@
 		          <tr>
 		            <td align="center" width="2"><?= $no;?></td>
 		            <td><?= $dokSyarat['ref_surat_nama']?></td>
-		            <td><center><input type="checkbox" name="privlg[]" value="<?=$dokSyarat['ref_surat_id']?>"<?= $checked;?>></center></td>
+		            <td><center><input type="checkbox" name="privlg[]" disabled="disabled" value="<?=$dokSyarat['ref_surat_id']?>"<?= $checked;?>></center></td>
 		          </tr>
 		          <?php $no++;
 		        }?>
