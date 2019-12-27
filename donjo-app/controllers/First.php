@@ -565,9 +565,9 @@ class First extends Web_Controller {
 		$data = $this->penduduk_model->list_dokumen($_SESSION['id']);
 		for ($i=0; $i < count($data); $i++)
 		{
+			$berkas = $data[$i]['satuan'];
 			$list_dokumen[$i][] = $data[$i]['no'];
-			$list_dokumen[$i][] = $data[$i]['nama'];
-			$list_dokumen[$i][] = urlencode($data[$i]['satuan']);
+			$list_dokumen[$i][] = "<a href='".site_url("mandiri_web/unduh_berkas/".$data[$i][id])."/{$data[$i][id_pend]}"."'>".$data[$i]["nama"].'</a>';
 			$list_dokumen[$i][] = tgl_indo2($data[$i]['tgl_upload']);
 			$list_dokumen[$i][] = $data[$i]['id'];
 		}

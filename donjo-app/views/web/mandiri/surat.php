@@ -113,8 +113,7 @@
       <thead>
         <tr>
           <th>No</th>
-          <th>Nama Dokumen</th>
-          <th>Berkas</th>
+          <th>Judul Dokumen</th>
           <th>Tanggal Upload</th>
           <th>Aksi</th>
         </tr>

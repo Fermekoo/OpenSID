@@ -36,14 +36,7 @@ $(document).ready(function() {
 		},
 		'aoColumnDefs': [
 			{
-				'aTargets': [2],
-				'mData': 'dokumen_path',
-				'mRender': function (data, type, row) {
-						return `<a href="${LOKASI_DOKUMEN + row[2]}" target="_blank">${row[2]}</a>`;
-				}
-			},
-			{
-				'aTargets': [4],
+				'aTargets': [3],
 				'mData': 'aksi',
 				'mRender': function (data, type, row) {
 						return `<button type="button" class="btn bg-orange btn-flat btn-sm edit text-center" data-toggle="modal" data-target="#modal" data-title="Ubah Data" title="Ubah Data"  title="Ubah Data" data-id="${row[4]}"><i class="fa fa-edit"></i> Ubah</button>
