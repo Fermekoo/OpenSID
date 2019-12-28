@@ -569,6 +569,7 @@ class First extends Web_Controller {
 			$list_dokumen[$i][] = $data[$i]['no'];
 			$list_dokumen[$i][] = "<a href='".site_url("mandiri_web/unduh_berkas/".$data[$i][id])."/{$data[$i][id_pend]}"."'>".$data[$i]["nama"].'</a>';
 			$list_dokumen[$i][] = tgl_indo2($data[$i]['tgl_upload']);
+			$list_dokumen[$i][] = $data[$i]['nama'];
 			$list_dokumen[$i][] = $data[$i]['id'];
 		}
 		$list['data'] = count($list_dokumen) > 0 ? $list_dokumen : array();
