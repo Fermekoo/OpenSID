@@ -56,12 +56,12 @@ class Surat_mohon extends Admin_Controller {
 
 		if ($id)
 		{
-			$data['ref_surat_format'] = $this->lapor_model->get_surat($id);
+			$data['ref_syarat_surat'] = $this->lapor_model->get_surat($id);
 			$data['form_action'] = site_url("surat_mohon/update/$p/$o/$id");
 		}
 		else
 		{
-			$data['ref_surat_format'] = NULL;
+			$data['ref_syarat_surat'] = NULL;
 			$data['form_action'] = site_url("surat_mohon/insert");
 		}
 

@@ -45,14 +45,14 @@
 
 	public function autocomplete()
 	{
-		$sql = "SELECT ref_surat_nama FROM ref_surat_format";
+		$sql = "SELECT ref_syarat_nama FROM ref_syarat_surat";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 
 		$out = '';
 		for ($i=0; $i < count($data); $i++)
 		{
-			$out .= ",'".$data[$i]['ref_surat_nama']."'";
+			$out .= ",'".$data[$i]['ref_syarat_nama']."'";
 		}
 		return '['.strtolower(substr($out, 1)).']';
 	}
@@ -63,7 +63,7 @@
 		{
 			$keyword = $_SESSION['cari'];
 			$keyword = '%'.$this->db->escape_like_str($keyword).'%';
-			$search_sql = " AND (u.ref_surat_nama LIKE '$keyword' OR u.ref_surat_nama LIKE '$keyword')";
+			$search_sql = " AND (u.ref_syarat_nama LIKE '$keyword' OR u.ref_syarat_nama LIKE '$keyword')";
 			return $search_sql;
 		}
 	}
@@ -73,7 +73,7 @@
 		if (isset($_SESSION['filter']))
 		{
 			$filter = $_SESSION['filter'];
-			$filter_sql = " AND u.ref_surat_id = $filter";
+			$filter_sql = " AND u.ref_syarat_id = $filter";
 			return $filter_sql;
 		}
 	}
@@ -96,7 +96,7 @@
 
 	private function list_data_sql()
 	{
-		$sql = " FROM ref_surat_format u, ref_surat_format g WHERE u.ref_surat_id = g.ref_surat_id ";
+		$sql = " FROM ref_syarat_surat u, ref_syarat_surat g WHERE u.ref_syarat_id = g.ref_syarat_id ";
 		$sql .= $this->search_sql();
 		$sql .= $this->filter_sql();
 		return $sql;
@@ -108,24 +108,24 @@
 		switch($order)
 		{
 			case 1 :
-				$order_sql = ' ORDER BY u.ref_surat_nama';
+				$order_sql = ' ORDER BY u.ref_syarat_nama';
 				break;
 			case 2:
-				$order_sql = ' ORDER BY u.ref_surat_nama DESC';
+				$order_sql = ' ORDER BY u.ref_syarat_nama DESC';
 				break;
 			case 3 :
-				$order_sql = ' ORDER BY u.ref_surat_id';
+				$order_sql = ' ORDER BY u.ref_syarat_id';
 				break;
 			case 4:
-				$order_sql = ' ORDER BY u.ref_surat_id DESC';
+				$order_sql = ' ORDER BY u.ref_syarat_id DESC';
 				break;
 			default:
-				$order_sql = ' ORDER BY u.ref_surat_id';
+				$order_sql = ' ORDER BY u.ref_syarat_id';
 		}
 		// Paging sql
 		$paging_sql = ' LIMIT '.$offset.','.$limit;
 		// Query utama
-		$sql = "SELECT u.*, g.ref_surat_nama as grup " . $this->list_data_sql();
+		$sql = "SELECT u.*, g.ref_syarat_nama as grup " . $this->list_data_sql();
 		$sql .= $order_sql;
 		$sql .= $paging_sql;
 
@@ -153,9 +153,9 @@
 
 		$data = $this->input->post(NULL);
 
-		$data['ref_surat_nama'] = strip_tags($data['ref_surat_nama']);
+		$data['ref_syarat_nama'] = strip_tags($data['ref_syarat_nama']);
 
-		if (!$this->db->insert('ref_surat_format', $data))
+		if (!$this->db->insert('ref_syarat_surat', $data))
 		{
 			$_SESSION['success'] = -1;
 			$_SESSION['error_msg'] = ' -> Gagal memperbarui data di database';
@@ -165,8 +165,8 @@
 	public function update($id=0)
 	{
 		$data = $_POST;
-		$this->db->where('ref_surat_id', $id);
-		$outp = $this->db->update('ref_surat_format', $data);
+		$this->db->where('ref_syarat_id', $id);
+		$outp = $this->db->update('ref_syarat_surat', $data);
 
 		if ($outp) $_SESSION['success'] = 1;
 		else $_SESSION['success'] = -1;
@@ -174,7 +174,7 @@
 
 	public function delete($idUser = '')
 	{
-		$sql = "DELETE FROM ref_surat_format WHERE ref_surat_id = ?";
+		$sql = "DELETE FROM ref_syarat_surat WHERE ref_syarat_id = ?";
 		$hasil = $this->db->query($sql, array($idUser));
 
     if ($hasil)
@@ -204,7 +204,7 @@
 
 	public function get_surat($id = 0)
 	{
-		$sql = "SELECT * FROM ref_surat_format WHERE ref_surat_id = ?";
+		$sql = "SELECT * FROM ref_syarat_surat WHERE ref_syarat_id = ?";
 		$query = $this->db->query($sql, $id);
 		$data = $query->row_array();
 		return $data;
@@ -214,8 +214,8 @@
 	{
 		$this->db->select('*')
 				 ->from('tweb_surat_format')
-				 ->join('surat_format_ref', "tweb_surat_format.id = surat_format_ref.surat_format_id")
-				 ->join('ref_surat_format', "ref_surat_format.ref_surat_id = surat_format_ref.ref_surat_id")
+				 ->join('syarat_surat', "tweb_surat_format.id = syarat_surat.surat_format_id")
+				 ->join('ref_syarat_surat', "ref_syarat_surat.ref_syarat_id = syarat_surat.ref_syarat_id")
 				 ->where('tweb_surat_format.nama',$nama_surat);
 		 $query = $this->db->get();
 		 $data = $query->result_array();
@@ -224,7 +224,7 @@
 		 {
 			 $data[$i]['no'] = $j + 1;
 			 $data[$i]['cb'] = "";
-			 $data[$i]['ref_surat_nama'] = $data[$i]['ref_surat_nama'];
+			 $data[$i]['ref_syarat_nama'] = $data[$i]['ref_syarat_nama'];
 			 $j++;
 		 }
 		 return $data;
@@ -234,8 +234,8 @@
 	{
 		$this->db->select('*')
 				 ->from('tweb_surat_format')
-				 ->join('surat_format_ref', "tweb_surat_format.id = surat_format_ref.surat_format_id")
-				 ->join('ref_surat_format', "ref_surat_format.ref_surat_id = surat_format_ref.ref_surat_id")
+				 ->join('syarat_surat', "tweb_surat_format.id = syarat_surat.surat_format_id")
+				 ->join('ref_syarat_surat', "ref_syarat_surat.ref_syarat_id = syarat_surat.ref_syarat_id")
 				 ->where('tweb_surat_format.id',$id);
 		 $query = $this->db->get();
 		 $data = $query->result_array();
@@ -251,7 +251,7 @@
 	public function get_surat_ref_all()
 	{
 		$this->db->select('*')
-		         ->from('ref_surat_format');
+		         ->from('ref_syarat_surat');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -260,9 +260,9 @@
 	{
 		$this->db->select('*')
 				 ->from('tweb_surat_format')
-				 ->join('surat_format_ref', "tweb_surat_format.id = surat_format_ref.surat_format_id")
-				 ->join('ref_surat_format', "ref_surat_format.ref_surat_id = surat_format_ref.ref_surat_id")
-				 ->where('surat_format_ref.surat_format_id',$id);
+				 ->join('syarat_surat', "tweb_surat_format.id = syarat_surat.surat_format_id")
+				 ->join('ref_syarat_surat', "ref_syarat_surat.ref_syarat_id = syarat_surat.ref_syarat_id")
+				 ->where('syarat_surat.surat_format_id',$id);
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -271,7 +271,7 @@
 	{
 		$this->db->select('*')
 				 ->from('dokumen')
-				 ->join('ref_surat_format', "dokumen.id_syarat = ref_surat_format.ref_surat_id")
+				 ->join('ref_syarat_surat', "dokumen.id_syarat = ref_syarat_surat.ref_syarat_id")
 				 ->where('dokumen.id_pend',$id);
 		$query = $this->db->get();
 		return $query->result();
@@ -293,10 +293,10 @@
 		foreach($privilege_ids as $privilege_id)
 		{
 			$this->db->select('*')
-					 ->from('surat_format_ref')
-					 ->join('tweb_surat_format', "tweb_surat_format.id = surat_format_ref.surat_format_id")
-					 ->join('ref_surat_format', "ref_surat_format.ref_surat_id = surat_format_ref.ref_surat_id")
-					 ->where('surat_format_ref.surat_format_id',$surat_format_id);
+					 ->from('syarat_surat')
+					 ->join('tweb_surat_format', "tweb_surat_format.id = syarat_surat.surat_format_id")
+					 ->join('ref_syarat_surat', "ref_syarat_surat.ref_syarat_id = syarat_surat.ref_syarat_id")
+					 ->where('syarat_surat.surat_format_id',$surat_format_id);
 			$this->db->delete();
 		}
 

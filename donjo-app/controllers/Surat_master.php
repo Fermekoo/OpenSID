@@ -207,8 +207,8 @@ class Surat_master extends Admin_Controller {
 		if (isset($privilegeData) && !empty($privilegeData)) {
 			$query = $this->lapor_model->remove_from_privileges($privilegeData, $id);
 			foreach ($privilegeData as $key => $value) {
-			$data = array('ref_surat_id' => $privilegeData[$key], 'surat_format_id' => $id);
-			$result = $this->db->insert('surat_format_ref', $data);
+			$data = array('ref_syarat_id' => $privilegeData[$key], 'surat_format_id' => $id);
+			$result = $this->db->insert('syarat_surat', $data);
 			}
 		}
 		redirect("surat_master/index/$p/$o");

@@ -559,8 +559,8 @@ class Web_dokumen_model extends CI_Model {
 	{
 		$this->db->select('*')
 				 ->from('tweb_surat_format')
-				 ->join('surat_format_ref', "tweb_surat_format.id = surat_format_ref.surat_format_id")
-				 ->join('ref_surat_format', "ref_surat_format.ref_surat_id = surat_format_ref.ref_surat_id")
+				 ->join('syarat_surat', "tweb_surat_format.id = syarat_surat.surat_format_id")
+				 ->join('ref_syarat_surat', "ref_syarat_surat.ref_syarat_id = syarat_surat.ref_syarat_id")
 				 ->where('tweb_surat_format.nama',$nama_surat);
 		 $query = $this->db->get();
 		 $data = $query->result_array();
@@ -569,7 +569,7 @@ class Web_dokumen_model extends CI_Model {
 		 {
 			 $data[$i]['no'] = $j + 1;
 			 $data[$i]['cb'] = "";
-			 $data[$i]['ref_surat_nama'] = $data[$i]['ref_surat_nama'];
+			 $data[$i]['ref_syarat_nama'] = $data[$i]['ref_syarat_nama'];
 			 $j++;
 		 }
 		 return $data;
@@ -578,7 +578,7 @@ class Web_dokumen_model extends CI_Model {
 	public function get_surat_ref_all()
 	{
 		$this->db->select('*')
-		         ->from('ref_surat_format');
+		         ->from('ref_syarat_surat');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -587,9 +587,9 @@ class Web_dokumen_model extends CI_Model {
 	{
 		$this->db->select('*')
 				 ->from('tweb_surat_format')
-				 ->join('surat_format_ref', "tweb_surat_format.id = surat_format_ref.surat_format_id")
-				 ->join('ref_surat_format', "ref_surat_format.ref_surat_id = surat_format_ref.ref_surat_id")
-				 ->where('surat_format_ref.surat_format_id',$id);
+				 ->join('syarat_surat', "tweb_surat_format.id = syarat_surat.surat_format_id")
+				 ->join('ref_syarat_surat', "ref_syarat_surat.ref_syarat_id = syarat_surat.ref_syarat_id")
+				 ->where('syarat_surat.surat_format_id',$id);
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -610,10 +610,10 @@ class Web_dokumen_model extends CI_Model {
 		foreach($privilege_ids as $privilege_id)
 		{
 			$this->db->select('*')
-					 ->from('surat_format_ref')
-					 ->join('tweb_surat_format', "tweb_surat_format.id = surat_format_ref.surat_format_id")
-					 ->join('ref_surat_format', "ref_surat_format.ref_surat_id = surat_format_ref.ref_surat_id")
-					 ->where('surat_format_ref.surat_format_id',$surat_format_id);
+					 ->from('syarat_surat')
+					 ->join('tweb_surat_format', "tweb_surat_format.id = syarat_surat.surat_format_id")
+					 ->join('ref_syarat_surat', "ref_syarat_surat.ref_syarat_id = syarat_surat.ref_syarat_id")
+					 ->where('syarat_surat.surat_format_id',$surat_format_id);
 			$this->db->delete();
 		}
 

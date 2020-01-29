@@ -24,29 +24,29 @@ class Migrasi_2001_ke_2002 extends CI_model {
 
 	private function surat_mandiri()
 	{
-    // Table ref_surat_format tempat nama dokumen sbg syarat Permohonan surat
-		if (!$this->db->table_exists('ref_surat_format') )
+    // Table ref_syarat_surat tempat nama dokumen sbg syarat Permohonan surat
+		if (!$this->db->table_exists('ref_syarat_surat') )
 		{
 	    $this->dbforge->add_field(array(
-				'ref_surat_id' => array(
+				'ref_syarat_id' => array(
 					'type' => 'INT',
 					'constraint' => 1,
 					'unsigned' => TRUE,
 					'null' => FALSE,
 					'auto_increment' => TRUE
 				),
-				'ref_surat_nama' => array(
+				'ref_syarat_nama' => array(
 					'type' => 'VARCHAR',
 					'constraint' => 255,
 					'null' => FALSE,
 				),
 			));
-			$this->dbforge->add_key("ref_surat_id",true);
-			$this->dbforge->create_table("ref_surat_format", TRUE);
+			$this->dbforge->add_key("ref_syarat_id",true);
+			$this->dbforge->create_table("ref_syarat_surat", TRUE);
 
-	    // Menambahkan Data Table ref_surat_format
+	    // Menambahkan Data Table ref_syarat_surat
 	    $query = "
-	    INSERT INTO `ref_surat_format` (`ref_surat_id`, `ref_surat_nama`) VALUES
+	    INSERT INTO `ref_syarat_surat` (`ref_syarat_id`, `ref_syarat_nama`) VALUES
 		    (1, 'Surat Pengantar RT/RW'),
 		    (2, 'Fotokopi KK'),
 		    (3, 'Fotokopi KTP'),
@@ -63,8 +63,8 @@ class Migrasi_2001_ke_2002 extends CI_model {
 	    $this->db->query($query);
 	  }
 
-    // Table surat_format_ref sbg link antara surat yg dimohon dan dokumen yg diperlukan
-		if (!$this->db->table_exists('surat_format_ref') )
+    // Table syarat_surat sbg link antara surat yg dimohon dan dokumen yg diperlukan
+		if (!$this->db->table_exists('syarat_surat') )
 		{
 	    $this->dbforge->add_field(array(
 				'id' => array(
@@ -79,7 +79,7 @@ class Migrasi_2001_ke_2002 extends CI_model {
 					'null' => FALSE,
 
 				),
-				'ref_surat_id' => array(
+				'ref_syarat_id' => array(
 					'type' => 'INT',
 					'constraint' => 10,
 					'null' => FALSE,
@@ -87,7 +87,7 @@ class Migrasi_2001_ke_2002 extends CI_model {
 				),
 			));
 			$this->dbforge->add_key("id",true);
-			$this->dbforge->create_table("surat_format_ref", TRUE);
+			$this->dbforge->create_table("syarat_surat", TRUE);
 		}
 
     // Menambahkan menu 'Group / Hak Akses' ke table 'setting_modul'

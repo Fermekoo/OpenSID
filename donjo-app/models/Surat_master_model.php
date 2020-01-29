@@ -415,6 +415,16 @@
 				->get('tweb_surat_format')->row_array();
 		return $sudahAda['ada'];
 	}
+
+	public function get_syarat_surat($id=1)
+	{
+		$data = $this->db->select('r.ref_syarat_id, r.ref_syarat_nama')
+			->where('surat_format_id', $id)
+			->from('syarat_surat s')
+			->join('ref_syarat_surat r', 's.ref_syarat_id = r.ref_syarat_id')
+			->get()->result_array();
+		return $data;
+	}
 }
 
 ?>

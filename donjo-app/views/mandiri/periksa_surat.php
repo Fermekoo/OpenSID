@@ -60,12 +60,12 @@
 		        </tr>
 		        <?php $no=1; foreach($dokSyarats as $dokSyarat){?>
 		          <?php
-		          $pID = $dokSyarat['ref_surat_id'];
+		          $pID = $dokSyarat['ref_syarat_id'];
 		          $checked = null;
 		          $pri = null;
 		          foreach($crtdokSyarat as $pri)
 		          {
-		            if ($pID == $pri->ref_surat_id)
+		            if ($pID == $pri->ref_syarat_id)
 		            {
 		              $checked= ' checked="checked"';
 		              break;
@@ -74,8 +74,8 @@
 		          ?>
 		          <tr>
 		            <td align="center" width="2"><?= $no;?></td>
-		            <td><?= $dokSyarat['ref_surat_nama']?></td>
-		            <td><center><input type="checkbox" name="privlg[]" disabled="disabled" value="<?=$dokSyarat['ref_surat_id']?>"<?= $checked;?>></center></td>
+		            <td><?= $dokSyarat['ref_syarat_nama']?></td>
+		            <td><center><input type="checkbox" name="privlg[]" disabled="disabled" value="<?=$dokSyarat['ref_syarat_id']?>"<?= $checked;?>></center></td>
 		          </tr>
 		          <?php $no++;
 		        }?>

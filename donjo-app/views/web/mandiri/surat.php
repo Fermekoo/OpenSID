@@ -62,7 +62,20 @@
       </div>
     </div>
     <div class="box-body">
-      <table class="table table-striped table-bordered table-responsive" id="surat">
+      <table class="table table-striped table-bordered" id="syarat_surat">
+        <thead>
+          <tr>
+            <th width="2"><center>No</center></th>
+            <th><center>Nama Dokumen</center></th>
+            <th><center>Status Kelengkapan Dokumen</center></th>
+          </tr>
+        </thead>
+        <tfoot>
+        </tfoot>
+      </table>
+
+
+<!--       <table class="table table-striped table-bordered table-responsive" id="surat">
         <tr>
           <th width="2"><center>No</center></th>
           <th><center>Nama Dokumen</center></th>
@@ -70,12 +83,12 @@
         </tr>
         <?php $no=1; foreach($dokSyarats as $dokSyarat){?>
           <?php
-          $pID = $dokSyarat['ref_surat_id'];
+          $pID = $dokSyarat['ref_syarat_id'];
           $checked = null;
           $pri = null;
           foreach($crtdokSyarat as $pri)
           {
-            if ($pID == $pri->ref_surat_id)
+            if ($pID == $pri->ref_syarat_id)
             {
               $checked= ' checked="checked"';
               break;
@@ -84,12 +97,12 @@
           ?>
           <tr>
             <td align="center" width="2"><?= $no;?></td>
-            <td><?= $dokSyarat['ref_surat_nama']?></td>
-            <td><center><input type="checkbox" name="privlg[]" disabled="disabled" value="<?=$dokSyarat['ref_surat_id']?>"<?= $checked;?>></center></td>
+            <td><?= $dokSyarat['ref_syarat_nama']?></td>
+            <td><center><input type="checkbox" name="privlg[]" disabled="disabled" value="<?=$dokSyarat['ref_syarat_id']?>"<?= $checked;?>></center></td>
           </tr>
           <?php $no++;
         }?>
-      </table>
+      </table> -->
     </div>
     <div class="box-footer">
       <div class="col-xs-12">
@@ -147,7 +160,7 @@
                   <select class="form-control required input-sm" name="id_syarat" id="id_syarat">
                     <option> -- Pilih Jenis Dokumen -- </option>
                     <?php foreach ($menu_dokumen_mandiri AS $data): ?>
-                      <option value="<?= $data['ref_surat_id']?>"><?= $data['ref_surat_nama']?></option>
+                      <option value="<?= $data['ref_syarat_id']?>"><?= $data['ref_syarat_nama']?></option>
                     <?php endforeach;?>
                   </select>
                   </div>
@@ -179,24 +192,39 @@
 <script type='text/javascript'>
   $(document).ready(function(){
 
-    $('#id_surat').change(function(){
-      var id_surat = $(this).val();
-      var url = "<?= site_url('first/cek_syarat')?>";
-
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: {
-          id_surat: id_surat
-        },
-        dataType: "JSON",
-        success: function (data) {
-          console.log("Success!!");
-        },
-        error: function (xhr, desc, err) {
-          console.log('error');
+    // var id_surat = 0;
+    var url = "<?= site_url('first/cek_syarat')?>";
+    table = $('#syarat_surat').DataTable({
+      'processing': true,
+      'serverSide': true,
+      'paging': false,
+      'info': false,
+      'ordering': false,
+      'searching': false,
+      "ajax": {
+        "url": url,
+        "type": "POST",
+        data: function ( d ) {
+          d.id_surat = $("#id_surat").val();
         }
-      });
+      },
+      //Set column definition initialisation properties.
+      "columnDefs": [
+        {
+          "targets": [ 0 ], //first column / numbering column
+          "orderable": false, //set not orderable
+        },
+      ],
+      'language': {
+        'url': BASE_URL + '/assets/bootstrap/js/dataTables.indonesian.lang'
+      },
+      'drawCallback': function (){
+          $('.dataTables_paginate > .pagination').addClass('pagination-sm no-margin');
+      }
+    });
+
+    $('#id_surat').change(function(){
+      table.ajax.reload();
     });
 
     if ($('input[name=id_permohonan]').val())
@@ -205,5 +233,5 @@
       $('#id_surat').change();
     }
 
- });
- </script>
+  });
+</script>

@@ -105,12 +105,12 @@
 								</tr>
 								<?php $no=1; foreach($privileges as $privilege){?>
 									<?php
-									$pID = $privilege['ref_surat_id'];
+									$pID = $privilege['ref_syarat_id'];
 									$checked = null;
 									$item = null;
 									foreach($crtPrivilege as $pri)
 									{
-										if ($pID == $pri->ref_surat_id)
+										if ($pID == $pri->ref_syarat_id)
 										{
 											$checked= ' checked="checked"';
 											break;
@@ -119,8 +119,8 @@
 									?>
 									<tr>
 										<td align="center" width="2"><?php echo $no;?></td>
-										<td><center><input type="checkbox" name="privlg[]" value="<?=$privilege['ref_surat_id']?>"<?php echo $checked;?>></center></td>
-										<td><?php echo $privilege['ref_surat_nama']?></td>
+										<td><center><input type="checkbox" name="privlg[]" value="<?=$privilege['ref_syarat_id']?>"<?php echo $checked;?>></center></td>
+										<td><?php echo $privilege['ref_syarat_nama']?></td>
 										<td></td>
 									</tr>
 									<?php $no++;

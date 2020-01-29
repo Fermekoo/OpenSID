@@ -226,13 +226,38 @@ class First extends Web_Controller {
 		$this->load->view('web/mandiri/layout.mandiri.php', $data);
 	}
 
-	public function cek_syarat()
-	{
-			$nama_surat = $this->input->post('id_surat');
-			$this->session->set_userdata('nama_surat', $nama_surat);
-			$data = $this->lapor_model->get_current_surat_id($nama_surat);
-			echo json_encode($data);
-	}
+  public function cek_syarat()
+  {
+  	$id = $this->input->post('id_surat');
+  	$syarat_surat = $this->surat_master_model->get_syarat_surat($id);
+		$data = array();
+		$no = $_POST['start'];
+
+		foreach ($syarat_surat as $baris)
+		{
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $baris['ref_syarat_nama'];
+			$row[] = 'hello';
+			$data[] = $row;
+		}
+
+		$output = array(
+     	"recordsTotal" => 10,
+      "recordsFiltered" => 10,
+			'data' => $data
+		);
+    echo json_encode($output);
+  }
+
+	// public function cek_syarat_lama()
+	// {
+	// 		$nama_surat = $this->input->post('id_surat');
+	// 		$this->session->set_userdata('nama_surat', $nama_surat);
+	// 		$data = $this->lapor_model->get_current_surat_id($nama_surat);
+	// 		echo json_encode($data);
+	// }
 
 	/*
 		Artikel bisa ditampilkan menggunakan parameter pertama sebagai id, dan semua parameter lainnya dikosongkan. Url first/artikel/:id

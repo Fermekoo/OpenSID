@@ -69,14 +69,14 @@
 															<?php foreach ($main as $data): ?>
 																<tr>
 																	<td width=2>
-																		<input type="checkbox" name="id_cb[]" value="<?=$data['ref_surat_id']?>" />
+																		<input type="checkbox" name="id_cb[]" value="<?=$data['ref_syarat_id']?>" />
 																	</td>
 																	<td width=3><?=$data['no']?></td>
 																	<td width=100 nowrap>
-																		<a href="<?=site_url("surat_mohon/form/$p/$o/$data[ref_surat_id]")?>" class="btn bg-orange btn-flat btn-sm"  title="Ubah"><i class="fa fa-edit"></i></a>
-																		<a href="#" data-href="<?=site_url("surat_mohon/delete/$p/$o/$data[ref_surat_id]")?>" class="btn bg-maroon btn-flat btn-sm"  title="Hapus" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
+																		<a href="<?=site_url("surat_mohon/form/$p/$o/$data[ref_syarat_id]")?>" class="btn bg-orange btn-flat btn-sm"  title="Ubah"><i class="fa fa-edit"></i></a>
+																		<a href="#" data-href="<?=site_url("surat_mohon/delete/$p/$o/$data[ref_syarat_id]")?>" class="btn bg-maroon btn-flat btn-sm"  title="Hapus" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
 																	</td>
-																	<td><?=$data['ref_surat_nama']?></td>
+																	<td><?=$data['ref_syarat_nama']?></td>
 																</tr>
 															<?php endforeach; ?>
 														</tbody>

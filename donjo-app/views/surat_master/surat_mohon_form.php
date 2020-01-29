@@ -25,7 +25,7 @@
 										<div class="form-group">
 											<label class="col-sm-3 control-label" >Nama Dokumen</label>
 											<div class="col-sm-8">
-													<input type="text" class="form-control input-sm required" id="ref_surat_nama" name="ref_surat_nama" placeholder="Nama Dokumen" value="<?= $ref_surat_format['ref_surat_nama']?>"/>
+													<input type="text" class="form-control input-sm required" id="ref_syarat_nama" name="ref_syarat_nama" placeholder="Nama Dokumen" value="<?= $ref_syarat_surat['ref_syarat_nama']?>"/>
 											</div>
 										</div>
 									</div>
