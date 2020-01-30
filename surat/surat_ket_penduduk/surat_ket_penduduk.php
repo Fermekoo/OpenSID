@@ -24,7 +24,7 @@
 							<input type="hidden" id="url_surat" name="url_surat" value="<?= $url ?>">
 							<input type="hidden" id="url_remote" name="url_remote" value="<?= site_url('surat/nomor_surat_duplikat')?>">
 							<div class="row jar_form">
-								<label for="nomor" class="col-sm-3"></label>
+								<label class="col-sm-3"></label>
 								<div class="col-sm-8">
 									<input class="required" type="hidden" name="nik" value="<?= $individu['id']?>">
 								</div>

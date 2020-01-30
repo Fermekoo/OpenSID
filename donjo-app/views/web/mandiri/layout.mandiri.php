@@ -1,7 +1,7 @@
 <?php $this->load->view('web/mandiri/header_mandiri.php') ?>
 <style type="text/css">
   div.modal-header.bg-primary { padding: 10px; }
-  .tdk-permohonan { display: none !important; }
+  #wrapper-mandiri .tdk-permohonan { display: none !important; }
   a.btn { color: #fff; }
   .unread > td { background-color: #ffeeaa !important; }
 </style>
@@ -62,6 +62,9 @@
     // Di form surat ubah isian admin menjadi disabled
     $("#wrapper-mandiri .readonly-permohonan").attr('disabled', true);
     $("#wrapper-mandiri form#validasi").removeAttr('target');
+    $("#wrapper-mandiri .tdk-permohonan textarea").removeClass('required');    
+    $("#wrapper-mandiri .tdk-permohonan select").removeClass('required');    
+    $("#wrapper-mandiri .tdk-permohonan input").removeClass('required');    
   });
 </script>
 

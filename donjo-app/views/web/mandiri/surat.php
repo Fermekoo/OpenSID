@@ -13,7 +13,6 @@
 
   <div class="box-header with-border">
     <span style="font-size: x-large"><strong>LAYANAN PERMOHONAN SURAT</strong></span>
-    <button type="submit" class="btn btn-primary pull-right" id="isi_form"><i class="fa fa-sign-in"></i>Isi Form</button>
     <input type="hidden" name="pemohon" value="<?= $_SESSION['nama']?>"/>
     <input type="hidden" readonly="readonly" name="nik" value="<?= $_SESSION['nik']?>"/>
     <input type="hidden" name="id_permohonan" value="<?= $permohonan['id']?>"/>
@@ -51,9 +50,7 @@
       </div>
     </div>
   </div>
-</form>
 
-<form id="cek_dokumen" action="" method="POST" enctype="multipart/form-data">
   <div class="box box-info" style="margin-top: 10px;">
     <div class="box-header with-border">
       <h4 class="box-title">DOKUMEN / KELENGKAPAN PENDUDUK YANG DIBUTUHKAN</h4>
@@ -107,7 +104,7 @@
     <div class="box-footer">
       <div class="col-xs-12">
         <button type="reset" class="btn btn-social btn-flat btn-danger btn-sm invisible"><i class="fa fa-times"></i> Batal</button>
-        <button class="btn btn-social btn-flat btn-info btn-sm pull-right"><i class="fa fa-check"></i> Cek Kelengkapan Dokumen</button>
+        <button type="submit" class="btn btn-primary pull-right" id="isi_form"><i class="fa fa-sign-in"></i>Isi Form</button>
       </div>
     </div>
   </div>

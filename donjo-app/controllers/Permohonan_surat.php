@@ -18,6 +18,9 @@ class Permohonan_surat extends Web_Controller {
 	public function form($id_permohonan='')
 	{
 		$data = $this->input->post();
+
+// var_dump($data); die();
+
 		if ($id_permohonan)
 		{
 			$data['permohonan'] = $this->permohonan_surat_model->get_permohonan($id_permohonan);
