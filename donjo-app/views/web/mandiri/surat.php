@@ -15,7 +15,7 @@
     <span style="font-size: x-large"><strong>LAYANAN PERMOHONAN SURAT</strong></span>
     <input type="hidden" name="pemohon" value="<?= $_SESSION['nama']?>"/>
     <input type="hidden" readonly="readonly" name="nik" value="<?= $_SESSION['nik']?>"/>
-    <input type="hidden" name="id_permohonan" value="<?= $permohonan['id']?>"/>
+    <input type="hidden" id="id_permohonan" name="id_permohonan" value="<?= $permohonan['id']?>"/>
   </div>
 
   <div class="box-body">
@@ -39,13 +39,13 @@
       <div class="form-group">
         <label for="keterangan_tambahan" class="col-sm-3 control-label">Keterangan Tambahan</label>
         <div class="col-sm-8 col-lg-8">
-          <textarea class="form-control input-sm" name="keterangan" rows="3" cols="46" placeholder="Ketik di sini untuk memberikan keterangan tambahan."></textarea>
+          <textarea class="form-control input-sm" name="keterangan" rows="3" cols="46" placeholder="Ketik di sini untuk memberikan keterangan tambahan."><?= $permohonan['keterangan']?></textarea>
         </div>
       </div>
       <div class="form-group">
         <label for="no_hp_aktif" class="col-sm-3 control-label">No. HP aktif</label>
         <div class="col-sm-6 col-lg-8">
-          <input class="form-control input-sm required" type="text" name="no_hp_aktif" placeholder="ketik no. HP" size="14"/>
+          <input class="form-control input-sm required" type="text" name="no_hp_aktif" placeholder="ketik no. HP" size="14" value="<?= $permohonan['no_hp_aktif']?>"/>
         </div>
       </div>
     </div>
@@ -70,36 +70,6 @@
         <tfoot>
         </tfoot>
       </table>
-
-
-<!--       <table class="table table-striped table-bordered table-responsive" id="surat">
-        <tr>
-          <th width="2"><center>No</center></th>
-          <th><center>Nama Dokumen</center></th>
-          <th><center>Status Kelengkapan Dokumen</center></th>
-        </tr>
-        <?php $no=1; foreach($dokSyarats as $dokSyarat){?>
-          <?php
-          $pID = $dokSyarat['ref_syarat_id'];
-          $checked = null;
-          $pri = null;
-          foreach($crtdokSyarat as $pri)
-          {
-            if ($pID == $pri->ref_syarat_id)
-            {
-              $checked= ' checked="checked"';
-              break;
-            }
-          }
-          ?>
-          <tr>
-            <td align="center" width="2"><?= $no;?></td>
-            <td><?= $dokSyarat['ref_syarat_nama']?></td>
-            <td><center><input type="checkbox" name="privlg[]" disabled="disabled" value="<?=$dokSyarat['ref_syarat_id']?>"<?= $checked;?>></center></td>
-          </tr>
-          <?php $no++;
-        }?>
-      </table> -->
     </div>
     <div class="box-footer">
       <div class="col-xs-12">
@@ -221,6 +191,7 @@
         "type": "POST",
         data: function ( d ) {
           d.id_surat = $("#id_surat").val();
+          d.id_permohonan  = $("#id_permohonan").val();
         }
       },
       //Set column definition initialisation properties.

@@ -25,6 +25,34 @@
 	<section class="content periksa">
 		<div class="row">
 			<div class="col-md-12">
+				<div class="box box-info">
+					<div class="box-body">
+						<form class="form-horizontal">
+						  <div class="form-group">
+						    <label class="control-label col-sm-2">Pemohon:</label>
+						    <div class="col-sm-10">
+						      <input class="form-control" readonly="readonly" value="<?= $individu['nik'].' - '.$individu['nama']?>">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <label class="control-label col-sm-2">Keterangan tambahan:</label>
+						    <div class="col-sm-10">
+						      <textarea class="form-control" readonly="readonly"><?= $periksa['keterangan'] ?></textarea>
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <label class="control-label col-sm-2">No HP Aktif:</label>
+						    <div class="col-sm-10">
+						      <input class="form-control" readonly="readonly" value="<?= $periksa['no_hp_aktif']?>">
+						    </div>
+						  </div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
 				<div class="box box-warning collapsed-box">
 					<div class="box-header">
 	          <div class="box-tools pull-right">
@@ -45,30 +73,30 @@
 			</div>
 		</div>
 
-		 <div class="box box-info" style="margin-top: 10px;">
-		    <div class="box-header with-border">
-		      <h4 class="box-title">Status Kelengkapan Dokumen</h4>
-		      <div class="box-tools">
-		        <button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#surat"><i class="fa fa-minus"></i></button>
-		      </div>
-		    </div>
-		    <div class="box-body">
-		      <table class="table table-striped table-bordered table-responsive" id="surat">
-		        <tr>
-		          <th width="2"><center>No</center></th>
-		          <th>Syarat</th>
-		          <th>Dokumen Melengkapi Syarat</th>
-		        </tr>
-		        <?php $no = 1; foreach ($syarat_permohonan as $syarat): ?>
-		          <tr>
-		            <td align="center" width="2"><?= $no;?></td>
-		            <td><?= $syarat['ref_syarat_nama']?></td>
-		            <td><a href="<?= site_url('mandiri_web/unduh_berkas/'.$syarat[dok_id].'/'.$periksa[id_pemohon])?>"><?= $syarat['dok_nama']?></a></td>
-		          </tr>
-	          <?php $no++; endforeach; ?>
-		      </table>
-		    </div>
-		  </div>
+	 	<div class="box box-info" style="margin-top: 10px;">
+	    <div class="box-header with-border">
+	      <h4 class="box-title">Status Kelengkapan Dokumen</h4>
+	      <div class="box-tools">
+	        <button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#surat"><i class="fa fa-minus"></i></button>
+	      </div>
+	    </div>
+	    <div class="box-body">
+	      <table class="table table-striped table-bordered table-responsive" id="surat">
+	        <tr>
+	          <th width="2"><center>No</center></th>
+	          <th>Syarat</th>
+	          <th>Dokumen Melengkapi Syarat</th>
+	        </tr>
+	        <?php $no = 1; foreach ($syarat_permohonan as $syarat): ?>
+	          <tr>
+	            <td align="center" width="2"><?= $no;?></td>
+	            <td><?= $syarat['ref_syarat_nama']?></td>
+	            <td><a href="<?= site_url('mandiri_web/unduh_berkas/'.$syarat[dok_id].'/'.$periksa[id_pemohon])?>"><?= $syarat['dok_nama']?></a></td>
+	          </tr>
+          <?php $no++; endforeach; ?>
+	      </table>
+	    </div>
+	  </div>
 
 		<div class="row">
 			<div class="col-md-12">

@@ -93,8 +93,6 @@ class Permohonan_surat_admin extends Admin_Controller {
 		$data['periksa'] = $periksa;
 
   	$data['syarat_permohonan'] = $this->permohonan_surat_model->get_syarat_permohonan($id);
-		// $data['dokSyarats'] = $this->lapor_model->get_current_surat_id($periksa['id_surat']);
-		// $data['crtdokSyarat'] = $this->lapor_model->get_current_dokumen_ref($_SESSION['id']);
 
 		$data['surat_url'] = rtrim($_SERVER['REQUEST_URI'], "/clear");
 		$data['form_action2'] = site_url("surat/periksa_doc/$id/$url");
