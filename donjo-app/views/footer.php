@@ -51,6 +51,14 @@
 
 				setTimeout(function()
 				{
+					if ( $("#b_permohonan_surat").length )
+					{
+						$("#b_permohonan_surat").load("<?= site_url()?>notif/permohonan_surat");
+						var refreshPermohonan = setInterval(function()
+						{
+							$("#b_permohonan_surat").load("<?= site_url()?>notif/permohonan_surat");
+						}, 3000);
+					}
 					if ( $("#b_komentar").length )
 					{
 						$("#b_komentar").load("<?= site_url()?>notif/komentar");

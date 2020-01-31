@@ -2,6 +2,13 @@
 
 class Notif_model extends CI_Model {
 
+	public function permohonan_surat_baru()
+	{
+		$num_rows = $this->db->where('status', 0)
+			->get('permohonan_surat')->num_rows();
+		return $num_rows;
+	}
+
 	public function komentar_baru()
 	{
 		$num_rows = $this->db->where('id_artikel !=', LAPORAN_MANDIRI)

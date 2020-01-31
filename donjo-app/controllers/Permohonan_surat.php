@@ -86,5 +86,10 @@ class Permohonan_surat extends Web_Controller {
 			include($data_form);
 	}
 
+	public function batalkan($id)
+	{
+		$this->permohonan_surat_model->update_status($id, array('status' => 9));
+		redirect('first/mandiri/1/21');
+	}
 
 }

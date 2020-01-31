@@ -55,6 +55,7 @@
 																	<th>Aksi</th>
 																	<th>NIK</th>
 																	<th>Nama Penduduk</th>
+																	<th>No HP Aktif</th>
 																	<th>Jenis Surat</th>
 																	<th>Status</th>
 																	<th>Tanggal Kirim</th>
@@ -79,6 +80,7 @@
 																		</td>
 																		<td nowrap><?=$data['nik'];?></td>
 																		<td><?=$data['nama']?></td>
+																		<td><?=$data['no_hp_aktif']?></td>
 																		<td><?=$data['jenis_surat']?></td>
 																		<td><?=$data['status']?></td>
 																		<td nowrap><?=tgl_indo2($data['created_at'])?></td>

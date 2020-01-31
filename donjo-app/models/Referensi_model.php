@@ -11,7 +11,8 @@ define("STATUS_PERMOHONAN", serialize(array(
 	"Belum lengkap" => "1",
 	"Menunggu tandatangan" => "2",
 	"Siap diambil" => "3",
-	"Sudah diambil" => "4"
+	"Sudah diambil" => "4",
+	"Dibatalkan" => "9"
 )));
 
 

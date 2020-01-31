@@ -8,6 +8,15 @@ class Notif extends Admin_Controller {
 		$this->load->model('notif_model');
 	}
 
+	public function permohonan_surat()
+	{
+		$j = $this->notif_model->permohonan_surat_baru();
+		if ($j > 0)
+		{
+			echo $j;
+		}
+	}
+
 	public function komentar()
 	{
 		$j = $this->notif_model->komentar_baru();

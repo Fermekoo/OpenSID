@@ -63,10 +63,7 @@
 		if (isset($_SESSION['filter']))
 		{
 			$kf = $_SESSION['filter'];
-			if ($kf == "0")
-				$filter_sql = "";
-			else
-				$filter_sql = " AND u.status = '".$kf."'";
+			$filter_sql = " AND u.status = '".$kf."'";
 			return $filter_sql;
 		}
 	}
