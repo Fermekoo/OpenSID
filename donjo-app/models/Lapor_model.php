@@ -210,26 +210,6 @@
 		return $data;
 	}
 
-	public function get_current_surat_nama($nama_surat)
-	{
-		$this->db->select('*')
-				 ->from('tweb_surat_format')
-				 ->join('syarat_surat', "tweb_surat_format.id = syarat_surat.surat_format_id")
-				 ->join('ref_syarat_surat', "ref_syarat_surat.ref_syarat_id = syarat_surat.ref_syarat_id")
-				 ->where('tweb_surat_format.nama',$nama_surat);
-		 $query = $this->db->get();
-		 $data = $query->result_array();
-		 $j = $offset;
-		 for ($i=0; $i<count($data); $i++)
-		 {
-			 $data[$i]['no'] = $j + 1;
-			 $data[$i]['cb'] = "";
-			 $data[$i]['ref_syarat_nama'] = $data[$i]['ref_syarat_nama'];
-			 $j++;
-		 }
-		 return $data;
-	}
-
 	public function get_surat_ref_all()
 	{
 		$this->db->select('*')
@@ -246,33 +226,19 @@
 				 ->join('ref_syarat_surat', "ref_syarat_surat.ref_syarat_id = syarat_surat.ref_syarat_id")
 				 ->where('syarat_surat.surat_format_id',$id);
 		$query = $this->db->get();
-		return $query->result();
+		return $query->result_array();
 	}
 
-	public function remove_from_privileges($privilege_ids=false, $surat_format_id=false)
+	public function hapus_syarat_surat($surat_format_id=false)
 	{
-
 		if(empty($surat_format_id))
 		{
 			return FALSE;
 		}
-
-		if(!is_array($privilege_ids))
-		{
-			$privilege_ids = array($privilege_ids);
-		}
-
-		foreach($privilege_ids as $privilege_id)
-		{
-			$this->db->select('*')
-					 ->from('syarat_surat')
-					 ->join('tweb_surat_format', "tweb_surat_format.id = syarat_surat.surat_format_id")
-					 ->join('ref_syarat_surat', "ref_syarat_surat.ref_syarat_id = syarat_surat.ref_syarat_id")
-					 ->where('syarat_surat.surat_format_id',$surat_format_id);
-			$this->db->delete();
-		}
-
-		return TRUE;
+		$outp = $this->db
+			->where('surat_format_id', $surat_format_id)
+			->delete('syarat_surat');
+		return $outp;
 	}
 
 	public function upload($url="")

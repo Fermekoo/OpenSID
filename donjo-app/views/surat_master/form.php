@@ -103,28 +103,14 @@
 									<th>Nama Dokumen</th>
 									<th> &nbsp;</th>
 								</tr>
-								<?php $no=1; foreach($privileges as $privilege){?>
-									<?php
-									$pID = $privilege['ref_syarat_id'];
-									$checked = null;
-									$item = null;
-									foreach($crtPrivilege as $pri)
-									{
-										if ($pID == $pri->ref_syarat_id)
-										{
-											$checked= ' checked="checked"';
-											break;
-										}
-									}
-									?>
+								<?php foreach($list_ref_syarat as $no => $ref_syarat): ?>
 									<tr>
-										<td align="center" width="2"><?php echo $no;?></td>
-										<td><center><input type="checkbox" name="privlg[]" value="<?=$privilege['ref_syarat_id']?>"<?php echo $checked;?>></center></td>
-										<td><?php echo $privilege['ref_syarat_nama']?></td>
+										<td align="center" width="2"><?= $no + 1;?></td>
+										<td><center><input type="checkbox" name="syarat[]" value="<?=$ref_syarat['ref_syarat_id']?>" <?php in_array($ref_syarat['ref_syarat_id'], array_column($syarat_surat, 'ref_syarat_id')) and print('checked');?>></center></td>
+										<td><?= $ref_syarat['ref_syarat_nama']?></td>
 										<td></td>
 									</tr>
-									<?php $no++;
-								}?>
+								<?php endforeach; ?>
 							</table>
 						</div>
 						<div class="box-footer">
@@ -151,13 +137,13 @@ if (checkBox.checked == true){
 function myFunction0() {
 	var checkBox = document.getElementById("checkall0[]");
 	if (checkBox.checked == true){
-		var items=document.getElementsByName('privlg[]');
+		var items=document.getElementsByName('syarat[]');
 		for(var i=0; i<items.length; i++){
 			if(items[i].type=='checkbox')
 			items[i].checked=true;
 		}
 	} else {
-		var items=document.getElementsByName('privlg[]');
+		var items=document.getElementsByName('syarat[]');
 		for(var i=0; i<items.length; i++){
 			if(items[i].type=='checkbox')
 			items[i].checked=false;

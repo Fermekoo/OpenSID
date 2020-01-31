@@ -112,6 +112,15 @@ class Permohonan_surat_admin extends Admin_Controller {
 		redirect('permohonan_surat_admin/index');
 	}
 
+	public function update_status($id, $status='')
+	{
+		if ($status)
+		{
+			$this->permohonan_surat_model->update_status($id, array('status' => $status));
+		}
+		redirect('permohonan_surat_admin/index');
+	}
+
 	private function get_data_untuk_form($url, &$data)
 	{
 		$this->load->model('pamong_model');

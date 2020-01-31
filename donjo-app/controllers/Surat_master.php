@@ -57,24 +57,24 @@ class Surat_master extends Admin_Controller {
 		$data['p'] = $p;
 		$data['o'] = $o;
 		$data['klasifikasi'] = $this->klasifikasi_model->list_kode();
-		$privilege = $this->lapor_model->get_surat_ref_all();
+		$list_ref_syarat = $this->lapor_model->get_surat_ref_all();
 
 		if ($id)
 		{
 			$data['surat_master'] = $this->surat_master_model->get_surat_format($id);
 			$data['form_action'] = site_url("surat_master/update/$p/$o/$id");
-			$currentPrivilege = $this->lapor_model->get_current_surat_ref($id);
+			$syarat_surat = $this->lapor_model->get_current_surat_ref($id);
 			$data['form_action1'] = site_url("surat_master/update_surat_mohon/$p/$o/$id");
 		}
 		else
 		{
 			$data['surat_master'] = NULL;
 			$data['form_action'] = site_url("surat_master/insert");
-			$currentPrivilege = NULL;
+			$syarat_surat = NULL;
 		}
 
-		$data['privileges'] = $privilege;
-		$data['crtPrivilege'] = $currentPrivilege;
+		$data['list_ref_syarat'] = $list_ref_syarat;
+		$data['syarat_surat'] = $syarat_surat;
 
 		$header = $this->header_model->get_data();
 		$nav['act'] = 4;
@@ -202,13 +202,14 @@ class Surat_master extends Admin_Controller {
 
 	public function update_surat_mohon($p = 1, $o = 0, $id = '')
 	{
-		$privilegeData = $this->input->post('privlg');
+		$syarat_surat = $this->input->post('syarat');
 
-		if (isset($privilegeData) && !empty($privilegeData)) {
-			$query = $this->lapor_model->remove_from_privileges($privilegeData, $id);
-			foreach ($privilegeData as $key => $value) {
-			$data = array('ref_syarat_id' => $privilegeData[$key], 'surat_format_id' => $id);
-			$result = $this->db->insert('syarat_surat', $data);
+		if (isset($syarat_surat) && !empty($syarat_surat)) {
+			$query = $this->lapor_model->hapus_syarat_surat($id);
+			foreach ($syarat_surat as $key => $value) 
+			{
+				$data = array('ref_syarat_id' => $syarat_surat[$key], 'surat_format_id' => $id);
+				$result = $this->db->insert('syarat_surat', $data);
 			}
 		}
 		redirect("surat_master/index/$p/$o");
