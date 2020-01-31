@@ -36,7 +36,8 @@
 								<td nowrap class="aksi">
 									<?php if ($data['status_id'] == 1): ?>
 										<a href="<?= site_url("first/mandiri_surat/$data[id]")?>" title="Lengkapi Surat" class="btn bg-orange btn-flat btn-sm"><i class="fa fa-edit"></i></a>
-									<?php elseif (in_array($data['status_id'], array('0', '1'))): ?>
+									<?php endif; ?>								
+									<?php if (in_array($data['status_id'], array('0', '1'))): ?>
 										<a href="<?= site_url("permohonan_surat/batalkan/$data[id]")?>" title="Batalkan" class="btn bg-red btn-flat btn-sm"><i class="fa fa-trash"></i></a>
 									<?php endif; ?>								
 								</td>
