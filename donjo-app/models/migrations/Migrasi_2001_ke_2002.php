@@ -153,6 +153,17 @@ class Migrasi_2001_ke_2002 extends CI_model {
 					'type' => 'TINYINT',
 					'constraint' => 1,
 					'default' => 0
+				),
+				'keterangan' => array(
+					'type' => 'TEXT',
+					'null' => TRUE
+				),
+				'no_hp_aktif' => array(
+					'type' => 'VARCHAR',
+					'constraint' => 50
+				),
+				'syarat' => array(
+					'type' => 'TEXT'
 				)
 			));
 			$this->dbforge->add_field("created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP");

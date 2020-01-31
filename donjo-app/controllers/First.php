@@ -230,7 +230,6 @@ class First extends Web_Controller {
   {
   	$dokumen = $this->penduduk_model->list_dokumen($_SESSION['id']);
   	$pilihan_dokumen = $this->load->view('web/mandiri/pilihan_syarat.php', array('dokumen' => $dokumen), TRUE);
-log_message('error', print_r($pilihan_dokumen, true));
   	$id = $this->input->post('id_surat');
   	$syarat_surat = $this->surat_master_model->get_syarat_surat($id);
 		$data = array();

@@ -4,6 +4,7 @@
 	.breadcrumb.admin {display: none;}
 	.box-header.admin {display: none;}
 	.tdk-periksa {display: none;}
+	table#surat {width: auto;}
 	.content.periksa
 	{
 		min-height: 0px !important;
@@ -55,30 +56,16 @@
 		      <table class="table table-striped table-bordered table-responsive" id="surat">
 		        <tr>
 		          <th width="2"><center>No</center></th>
-		          <th>Nama Dokumen</th>
-		          <th><center>Status Kelengkapan Dokumen</center></th>
+		          <th>Syarat</th>
+		          <th>Dokumen Melengkapi Syarat</th>
 		        </tr>
-		        <?php $no=1; foreach($dokSyarats as $dokSyarat){?>
-		          <?php
-		          $pID = $dokSyarat['ref_syarat_id'];
-		          $checked = null;
-		          $pri = null;
-		          foreach($crtdokSyarat as $pri)
-		          {
-		            if ($pID == $pri->ref_syarat_id)
-		            {
-		              $checked= ' checked="checked"';
-		              break;
-		            }
-		          }
-		          ?>
+		        <?php $no = 1; foreach ($syarat_permohonan as $syarat): ?>
 		          <tr>
 		            <td align="center" width="2"><?= $no;?></td>
-		            <td><?= $dokSyarat['ref_syarat_nama']?></td>
-		            <td><center><input type="checkbox" name="privlg[]" disabled="disabled" value="<?=$dokSyarat['ref_syarat_id']?>"<?= $checked;?>></center></td>
+		            <td><?= $syarat['ref_syarat_nama']?></td>
+		            <td><a href="<?= site_url('mandiri_web/unduh_berkas/'.$syarat[dok_id].'/'.$periksa[id_pemohon])?>"><?= $syarat['dok_nama']?></a></td>
 		          </tr>
-		          <?php $no++;
-		        }?>
+	          <?php $no++; endforeach; ?>
 		      </table>
 		    </div>
 		  </div>

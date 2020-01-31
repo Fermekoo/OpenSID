@@ -45,7 +45,7 @@
       <div class="form-group">
         <label for="no_hp_aktif" class="col-sm-3 control-label">No. HP aktif</label>
         <div class="col-sm-6 col-lg-8">
-          <input class="form-control input-sm" type="text" name="hp" placeholder="ketik no. HP" size="14"/>
+          <input class="form-control input-sm required" type="text" name="no_hp_aktif" placeholder="ketik no. HP" size="14"/>
         </div>
       </div>
     </div>
@@ -63,8 +63,8 @@
         <thead>
           <tr>
             <th width="2"><center>No</center></th>
-            <th><center>Nama Dokumen</center></th>
-            <th><center>Status Kelengkapan Dokumen</center></th>
+            <th><center>Syarat</center></th>
+            <th><center>Dokumen Melengkapi Syarat</center></th>
           </tr>
         </thead>
         <tfoot>
@@ -131,6 +131,24 @@
       <tbody id="list_dokumen">
       </tbody>
     </table>
+  </div>
+</div>
+
+<div class="modal fade in"  id="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header btn-danger">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-exclamation-triangle"></i> &nbsp;Peringatan</h4>
+      </div>
+      <div class="modal-body">
+        <p id="kata_peringatan"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-social btn-flat btn-danger btn-sm" data-dismiss="modal"><i class='fa fa-sign-out'></i> Tutup</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -229,6 +247,22 @@
       $('#id_surat').attr('disabled','disabled');
       $('#id_surat').change();
     }
+
+    $('#validasi').submit(function()
+    {
+      var validator = $("#validasi").validate();
+      var syarat = $("select[name='syarat[]']");
+      var i;
+      for (i = 0; i < syarat.length; i++)
+      {
+        if (!validator.element(syarat[i]))
+        {
+          $("#kata_peringatan").text('Syarat belum dilengkapi');
+          $("#dialog").modal('show');
+          return false;
+        }
+      };
+    });
 
   });
 </script>

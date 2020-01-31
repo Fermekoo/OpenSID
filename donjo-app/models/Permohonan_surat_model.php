@@ -189,5 +189,31 @@
 		return $isian_form;
 	}
 
+	public function get_syarat_permohonan($id)
+	{
+		$permohonan = $this->db->where('id', $id)
+			->get('permohonan_surat')
+			->row_array();
+		$syarat_permohonan = json_decode($permohonan['syarat'], true);
+		$sql_syarat_permohonan = sql_in_list($syarat_permohonan);
+  	$dokumen_kelengkapan = $this->db->select('id, nama')
+  		->from('dokumen')
+  		->where("id in ($sql_syarat_permohonan)")
+  		->get()->result_array();
+
+  	$dok_syarat = array();
+  	foreach ($dokumen_kelengkapan as $dok)
+  	{
+  		$dok_syarat[$dok['id']] = $dok['nama'];
+  	}
+  	$syarat_surat = $this->surat_master_model->get_syarat_surat($permohonan['id_surat']);
+  	for ($i = 0; $i < count($syarat_surat); $i++)
+  	{
+  		$syarat_surat[$i]['dok_id'] = $syarat_permohonan[$i];
+  		$syarat_surat[$i]['dok_nama'] = $dok_syarat[$syarat_permohonan[$i]];
+  	}
+		return $syarat_surat;
+	}
+
 }
 ?>

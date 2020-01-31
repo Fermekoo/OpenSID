@@ -18,8 +18,11 @@ class Permohonan_surat extends Web_Controller {
 	public function form($id_permohonan='')
 	{
 		$data = $this->input->post();
-
-// var_dump($data); die();
+		$data_permohonan = array('data_permohonan' => array(
+			'keterangan' => $data['keterangan'],
+			'no_hp_aktif' => $data['no_hp_aktif'],
+			'syarat' => $data['syarat']));
+		$this->session->set_userdata($data_permohonan);
 
 		if ($id_permohonan)
 		{
@@ -52,6 +55,10 @@ class Permohonan_surat extends Web_Controller {
 		$data['id_pemohon'] = $post['nik'];
 		$data['id_surat'] = $post['id_surat'];
 		$data['isian_form'] = json_encode($post);
+		$data_permohonan = $this->session->userdata('data_permohonan');
+		$data['keterangan'] = $data_permohonan['keterangan'];
+		$data['no_hp_aktif'] = $data_permohonan['no_hp_aktif'];
+		$data['syarat'] = json_encode($data_permohonan['syarat']);
 		if ($id_permohonan)
 		{
 			$data['status'] = 0; // kembalikan ke status 'sedang diperiksa'
