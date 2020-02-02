@@ -120,7 +120,7 @@
 							<li>Beritahu pemohon isian mana yang belum lengkap</li>
 						</ul>
 						<p>Status permohonan akan secara otomatis diubah menjadi 'Belum Lengkap'.</p>
-						<input id="isian_form" type="hidden" value='<?= $isian_form?>'>
+						<textarea id="isian_form" type="hidden"><?= $isian_form?></textarea>
 					</div>
 				</div>
 			</div>
@@ -145,7 +145,16 @@
     {
     	if (key)
     	{
-	    	$('*[name=' + key + ']').val(value);
+    		var elem = $('*[name=' + key + ']');
+	    	elem.val(value);
+	    	elem.change();
+	    	// Kalau isian hidden, akan ada isian lain untuk menampilkan datanya
+	    	if (elem.is(":hidden"))
+	    	{
+	    		var show = $('#' + key + '_show');
+	    		show.val(value);
+	    		show.change();
+	    	}
     	}
   	});
 	}

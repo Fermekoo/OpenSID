@@ -17,7 +17,7 @@
 	else
 	  include("surat/$nama_surat/$nama_surat.php");
 ?>
-<input id="isian_form" type="hidden" value='<?= $isian_form?>'>
+<textarea id="isian_form" type="hidden"><?= $isian_form?></textarea>
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -33,10 +33,19 @@
   {
     var isian_form = JSON.parse($('#isian_form').val(), function(key, value)
     {
-    	if (key)
-    	{
-	    	$('*[name=' + key + ']').val(value);
-    	}
-  	});
-	}
+      if (key)
+      {
+        var elem = $('*[name=' + key + ']');
+        elem.val(value);
+        elem.change();
+        // Kalau isian hidden, akan ada isian lain untuk menampilkan datanya
+        if (elem.is(":hidden"))
+        {
+          var show = $('#' + key + '_show');
+          show.val(value);
+          show.change();
+        }
+      }
+    });
+  }
 </script>

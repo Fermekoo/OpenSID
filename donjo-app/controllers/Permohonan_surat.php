@@ -66,7 +66,7 @@ class Permohonan_surat extends Web_Controller {
 		}
 		else
 			$this->permohonan_surat_model->insert($data);
-		redirect('first/mandiri/1/2');
+		redirect('first/mandiri/1/21');
 	}
 
 	private function get_data_untuk_form($url, &$data)
