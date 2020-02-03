@@ -74,6 +74,10 @@ class Migrasi_2002_ke_2003 extends CI_model {
 			));
 			$this->dbforge->add_key("id",true);
 			$this->dbforge->create_table("syarat_surat", TRUE);
+			$this->dbforge->add_column(
+				'syarat_surat',
+				array("CONSTRAINT `id_surat_format` FOREIGN KEY (`surat_format_id`) REFERENCES `tweb_surat_format` (`id`) ON DELETE CASCADE ON UPDATE CASCADE")
+			);
 		}
 
     // Menambahkan menu 'Group / Hak Akses' ke table 'setting_modul'
