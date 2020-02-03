@@ -71,6 +71,29 @@
 									<?php endif; ?>
 								</div>
 							</div>
+							<div id="atur_syarat">
+								<div class="box-header with-border">
+									<h4>Persyaratan Permohonan Surat</h4>
+								</div>
+								<div class="box-body" id="surat">
+									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-striped form">
+										<tr>
+											<th width="2">No</th>
+											<th width="5"><center><input type="checkbox" id="checkall0[]" onclick="myFunction0()"/></center></th>
+											<th>Nama Dokumen</th>
+											<th> &nbsp;</th>
+										</tr>
+										<?php foreach($list_ref_syarat as $no => $ref_syarat): ?>
+											<tr>
+												<td align="center" width="2"><?= $no + 1;?></td>
+												<td><center><input type="checkbox" name="syarat[]" value="<?=$ref_syarat['ref_syarat_id']?>" <?php in_array($ref_syarat['ref_syarat_id'], array_column($syarat_surat, 'ref_syarat_id')) and print('checked');?>></center></td>
+												<td><?= $ref_syarat['ref_syarat_nama']?></td>
+												<td></td>
+											</tr>
+										<?php endforeach; ?>
+									</table>
+								</div>
+							</div>
 							<div class="box-footer">
 								<div class="col-xs-12">
 									<button type="reset" class="btn btn-social btn-flat btn-danger btn-sm invisible"><i class="fa fa-times"></i> Batal</button>
@@ -83,49 +106,8 @@
 			</div>
 		</div>
 	</section>
-
-	<section class="content" id="atur_syarat" name="atur_syarat">
-		<form action="<?= $form_action1?>" method="post">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="box box-info">
-						<div class="box-header with-border">
-							<h4>Persyaratan Permohonan Surat</h4>
-							<div class="box-tools">
-								<button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#surat"><i class="fa fa-minus"></i></button>
-							</div>
-						</div>
-						<div class="box-body" id="surat">
-							<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-striped form">
-								<tr>
-									<th width="2">No</th>
-									<th width="5"><center><input type="checkbox" id="checkall0[]" onclick="myFunction0()"/></center></th>
-									<th>Nama Dokumen</th>
-									<th> &nbsp;</th>
-								</tr>
-								<?php foreach($list_ref_syarat as $no => $ref_syarat): ?>
-									<tr>
-										<td align="center" width="2"><?= $no + 1;?></td>
-										<td><center><input type="checkbox" name="syarat[]" value="<?=$ref_syarat['ref_syarat_id']?>" <?php in_array($ref_syarat['ref_syarat_id'], array_column($syarat_surat, 'ref_syarat_id')) and print('checked');?>></center></td>
-										<td><?= $ref_syarat['ref_syarat_nama']?></td>
-										<td></td>
-									</tr>
-								<?php endforeach; ?>
-							</table>
-						</div>
-						<div class="box-footer">
-							<div class="col-xs-12">
-								<button type="reset" class="btn btn-social btn-flat btn-danger btn-sm invisible"><i class="fa fa-times"></i> Batal</button>
-								<button class="btn btn-social btn-flat btn-info btn-sm pull-right"><i class="fa fa-check"></i> Simpan</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
-	</section>
-
 </div>
+
 <script type="text/javascript">
 var checkBox = document.getElementById("mandiri");
 if (checkBox.checked == true){

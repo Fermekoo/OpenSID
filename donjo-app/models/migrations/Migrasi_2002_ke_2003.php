@@ -4,6 +4,7 @@ class Migrasi_2002_ke_2003 extends CI_model {
 	public function up()
 	{
 		$this->surat_mandiri();
+		$this->surat_mandiri_tersedia();
 		$this->mailbox();
 	}
 
@@ -171,6 +172,30 @@ class Migrasi_2002_ke_2003 extends CI_model {
 		);
 		$sql = $this->db->insert_string('setting_modul', $modul) . " ON DUPLICATE KEY UPDATE modul = VALUES(modul), url = VALUES(url), ikon = VALUES(ikon), parent = VALUES(parent)";
 		$this->db->query($sql);
+	}
+
+	private function surat_mandiri_tersedia()
+	{
+		// Surat yg tersedia di permohonan surat melalui layanan mandiri plus syarat masing2
+		$surat_tersedia = array(
+			1 => array(1, 2, 3), //surat_ket_pengantar
+			2 => array(2, 3), //surat_ket_penduduk
+			3 => array(2, 3), //surat_bio_penduduk
+			5 => array(1, 2, 3) //surat_ket_pindah_penduduk
+		);
+		foreach ($surat_tersedia as $surat_format_id => $list_syarat)
+		{
+			$this->db->where('id', $surat_format_id)->update('tweb_surat_format', array('mandiri' => 1));
+			foreach ($list_syarat as $syarat_id)
+			{
+				$ada = $this->db->where('surat_format_id', $surat_format_id)->where('ref_syarat_id', $syarat_id)
+					->get('syarat_surat')->num_rows();
+				if (!$ada)
+				{
+					$this->db->insert('syarat_surat', array('surat_format_id' => $surat_format_id, 'ref_syarat_id' => $syarat_id));
+				}
+			}
+		}
 	}
 
 	private function mailbox()

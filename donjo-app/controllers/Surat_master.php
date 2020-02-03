@@ -64,7 +64,6 @@ class Surat_master extends Admin_Controller {
 			$data['surat_master'] = $this->surat_master_model->get_surat_format($id);
 			$data['form_action'] = site_url("surat_master/update/$p/$o/$id");
 			$syarat_surat = $this->lapor_model->get_current_surat_ref($id);
-			$data['form_action1'] = site_url("surat_master/update_surat_mohon/$p/$o/$id");
 		}
 		else
 		{
@@ -112,12 +111,24 @@ class Surat_master extends Admin_Controller {
 
 	public function insert()
 	{
+		$syarat = $this->input->post('syarat');
+		unset($_POST['syarat']);		
 		$this->surat_master_model->insert();
+		$surat_format_id = $this->db->insert_id();
+		if (!empty($syarat))
+		{
+			$this->update_surat_mohon($surat_format_id, $syarat);
+		}
 		redirect('surat_master');
 	}
 
 	public function update($p = 1, $o = 0, $id = '')
 	{
+		if ($syarat_surat = $this->input->post('syarat'))
+		{
+			$this->update_surat_mohon($id, $syarat_surat);
+			unset($_POST['syarat']);
+		}
 		$this->surat_master_model->update($id);
 		redirect("surat_master/index/$p/$o");
 	}
@@ -200,11 +211,9 @@ class Surat_master extends Admin_Controller {
 		redirect("surat_master");
 	}
 
-	public function update_surat_mohon($p = 1, $o = 0, $id = '')
+	private function update_surat_mohon($id, $syarat_surat)
 	{
-		$syarat_surat = $this->input->post('syarat');
-
-		if (isset($syarat_surat) && !empty($syarat_surat)) {
+		if (!empty($syarat_surat)) {
 			$query = $this->lapor_model->hapus_syarat_surat($id);
 			foreach ($syarat_surat as $key => $value) 
 			{
@@ -212,7 +221,6 @@ class Surat_master extends Admin_Controller {
 				$result = $this->db->insert('syarat_surat', $data);
 			}
 		}
-		redirect("surat_master/index/$p/$o");
 	}
 
 }
