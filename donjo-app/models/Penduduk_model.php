@@ -1341,7 +1341,7 @@
 
 	public function list_dokumen($id="")
 	{
-		$sql = "SELECT * FROM dokumen WHERE id_pend = ? AND deleted = 0";
+		$sql = "SELECT * FROM dokumen_hidup WHERE id_pend = ? AND deleted = 0";
 		$query = $this->db->query($sql, $id);
 		$data = null;
 		if ($query)
