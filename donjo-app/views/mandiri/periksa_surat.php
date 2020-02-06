@@ -120,7 +120,7 @@
 							<li>Beritahu pemohon isian mana yang belum lengkap</li>
 						</ul>
 						<p>Status permohonan akan secara otomatis diubah menjadi 'Belum Lengkap'.</p>
-						<textarea id="isian_form" type="hidden"><?= $isian_form?></textarea>
+						<textarea id="isian_form" hidden="hidden"><?= $isian_form?></textarea>
 					</div>
 				</div>
 			</div>

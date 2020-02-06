@@ -185,7 +185,12 @@ class Migrasi_2002_ke_2003 extends CI_model {
 			1 => array(1, 2, 3), //surat_ket_pengantar
 			2 => array(2, 3), //surat_ket_penduduk
 			3 => array(2, 3), //surat_bio_penduduk
-			5 => array(1, 2, 3) //surat_ket_pindah_penduduk
+			5 => array(1, 2, 3), //surat_ket_pindah_penduduk
+			6 => array(1, 2, 3), //surat_ket_jual_beli
+			8 => array(1, 2, 3), //surat_ket_catatan_kriminal
+			9 => array(2, 3), //surat_ket_ktp_dalam_proses
+			10 => array(1, 2, 3), //surat_ket_beda_nama
+			11 => array(1, 2, 3) //surat_jalan
 		);
 		foreach ($surat_tersedia as $surat_format_id => $list_syarat)
 		{
