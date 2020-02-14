@@ -28,7 +28,7 @@
       <div class="form-group">
         <label for="nama_surat" class="col-sm-3 control-label">Jenis Surat Yang Dimohon</label>
         <div class="col-sm-6 col-lg-8">
-          <select class="form-control required input-sm" name="id_surat" id="id_surat">
+          <select class="form-control select2 required input-sm" name="id_surat" id="id_surat">
             <option value=""> -- Pilih Jenis Surat -- </option>
             <?php foreach ($menu_surat_mandiri AS $data): ?>
               <option value="<?= $data['id']?>" <?php selected($data['id'], $permohonan['id_surat'])?>><?= $data['nama']?></option>
