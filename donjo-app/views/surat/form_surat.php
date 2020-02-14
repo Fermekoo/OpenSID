@@ -17,7 +17,7 @@
 	else
 	  include("surat/$nama_surat/$nama_surat.php");
 ?>
-<textarea id="isian_form" type="hidden"><?= $isian_form?></textarea>
+<textarea id="isian_form" hidden="hidden"><?= $isian_form?></textarea>
 
 <script type="text/javascript">
   $(document).ready(function() {
