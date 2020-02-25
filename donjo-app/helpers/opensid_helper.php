@@ -734,18 +734,29 @@ function masukkan_zip($files=array())
 
 // https://www.php.net/manual/en/function.array-column.php
 function array_column_ext($array, $columnkey, $indexkey = null) {
-    $result = array();
-    foreach ($array as $subarray => $value) {
-        if (array_key_exists($columnkey,$value)) { $val = $array[$subarray][$columnkey]; }
-        else if ($columnkey === null) { $val = $value; }
-        else { continue; }
-           
-        if ($indexkey === null) { $result[] = $val; }
-        elseif ($indexkey == -1 || array_key_exists($indexkey,$value)) {
-            $result[($indexkey == -1)?$subarray:$array[$subarray][$indexkey]] = $val;
-        }
+  $result = array();
+  foreach ($array as $subarray => $value) {
+    if (array_key_exists($columnkey,$value)) { $val = $array[$subarray][$columnkey]; }
+    else if ($columnkey === null) { $val = $value; }
+    else { continue; }
+       
+    if ($indexkey === null) { $result[] = $val; }
+    elseif ($indexkey == -1 || array_key_exists($indexkey,$value)) {
+      $result[($indexkey == -1)?$subarray:$array[$subarray][$indexkey]] = $val;
     }
-    return $result;
+  }
+  return $result;
+}
+
+function alfanumerik_spasi($str)
+{
+	return preg_replace('/[^a-zA-Z0-9\s]/', '', strip_tags($str));
+}
+
+function buat_slug($data_slug)
+{
+	$slug = $data_slug['thn'].'/'.$data_slug['bln'].'/'.$data_slug['hri'].'/'.$data_slug['slug'];
+	return $slug;
 }
 
 ?>
