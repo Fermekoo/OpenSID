@@ -213,6 +213,16 @@
       table.ajax.reload();
     });
 
+    // Perbaharui daftar pilihan dokumen setelah ada perubahan daftar dokumen yg tersedia
+    // Beri tenggang waktu supaya database dokumen selesai di-initialise
+    setTimeout(function() {
+      // Ambil instance dari datatable yg sudah ada
+      var dokumen = $('#dokumen').DataTable({"retrieve": true});
+      dokumen.on( 'draw', function () {
+        table.ajax.reload();
+      } );
+    }, 500);
+
     if ($('input[name=id_permohonan]').val())
     {
       $('#id_surat').attr('disabled','disabled');
