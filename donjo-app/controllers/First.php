@@ -436,25 +436,25 @@ class First extends Web_Controller {
 		$this->load->view($this->template, $data);
 	}
 
-  public function ajax_table_peraturan()
-  {
-    $kategori_dokumen = '';
-    $tahun_dokumen = '';
-    $tentang_dokumen = '';
-    $data = $this->web_dokumen_model->all_peraturan($kategori_dokumen, $tahun_dokumen, $tentang_dokumen);
-    echo json_encode($data);
-  }
+	public function ajax_table_peraturan()
+	{
+		$kategori_dokumen = '';
+		$tahun_dokumen = '';
+		$tentang_dokumen = '';
+		$data = $this->web_dokumen_model->all_peraturan($kategori_dokumen, $tahun_dokumen, $tentang_dokumen);
+		echo json_encode($data);
+	}
 
-  // function filter peraturan
-  public function filter_peraturan()
-  {
-    $kategori_dokumen = $this->input->post('kategori');
-    $tahun_dokumen = $this->input->post('tahun');
-    $tentang_dokumen = $this->input->post('tentang');
+	// function filter peraturan
+	public function filter_peraturan()
+	{
+		$kategori_dokumen = $this->input->post('kategori');
+		$tahun_dokumen = $this->input->post('tahun');
+		$tentang_dokumen = $this->input->post('tentang');
 
-    $data = $this->web_dokumen_model->all_peraturan($kategori_dokumen, $tahun_dokumen, $tentang_dokumen);
-    echo json_encode($data);
-  }
+		$data = $this->web_dokumen_model->all_peraturan($kategori_dokumen, $tahun_dokumen, $tentang_dokumen);
+		echo json_encode($data);
+	}
 
 	public function informasi_publik()
 	{
@@ -471,9 +471,9 @@ class First extends Web_Controller {
 		$this->load->view($this->template, $data);
 	}
 
-  public function ajax_informasi_publik()
-  {
-  	$informasi_publik = $this->web_dokumen_model->get_informasi_publik();
+	public function ajax_informasi_publik()
+	{
+		$informasi_publik = $this->web_dokumen_model->get_informasi_publik();
 		$data = array();
 		$no = $_POST['start'];
 
@@ -491,12 +491,12 @@ class First extends Web_Controller {
 		}
 
 		$output = array(
-     	"recordsTotal" => $this->web_dokumen_model->count_informasi_publik_all(),
-      "recordsFiltered" => $this->web_dokumen_model->count_informasi_publik_filtered(),
+			"recordsTotal" => $this->web_dokumen_model->count_informasi_publik_all(),
+			"recordsFiltered" => $this->web_dokumen_model->count_informasi_publik_filtered(),
 			'data' => $data
 		);
-    echo json_encode($output);
-  }
+		echo json_encode($output);
+	}
 
 	public function agenda($stat=0)
 	{
@@ -564,7 +564,7 @@ class First extends Web_Controller {
 
 	private function _get_common_data(&$data)
 	{
-		$data['desa'] = $this->first_m->get_data();
+		$data['desa'] = $this->config_model->get_data();
 		$data['menu_atas'] = $this->first_menu_m->list_menu_atas();
 		$data['menu_kiri'] = $this->first_menu_m->list_menu_kiri();
 		$data['teks_berjalan'] = $this->first_artikel_m->get_teks_berjalan();
