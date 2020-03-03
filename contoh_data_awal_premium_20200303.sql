@@ -4,6 +4,7 @@ DROP VIEW IF EXISTS daftar_anggota_grup;
 DROP VIEW IF EXISTS dokumen_hidup;
 DROP VIEW IF EXISTS keluarga_aktif;
 DROP VIEW IF EXISTS penduduk_hidup;
+DROP TABLE IF EXISTS syarat_surat;
 DROP TABLE IF EXISTS agenda;
 DROP TABLE IF EXISTS log_penduduk;
 DROP TABLE IF EXISTS setting_aplikasi_options;
@@ -7676,53 +7677,6 @@ CREATE TABLE `surat_masuk` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 #
-# TABLE STRUCTURE FOR: syarat_surat
-#
-
-DROP TABLE IF EXISTS `syarat_surat`;
-
-CREATE TABLE `syarat_surat` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `surat_format_id` int(10) NOT NULL,
-  `ref_syarat_id` int(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_surat_format` (`surat_format_id`),
-  CONSTRAINT `id_surat_format` FOREIGN KEY (`surat_format_id`) REFERENCES `tweb_surat_format` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
-
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (1, 1, 1);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (2, 1, 2);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (3, 1, 3);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (4, 2, 2);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (5, 2, 3);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (6, 3, 2);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (7, 3, 3);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (8, 5, 1);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (9, 5, 2);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (10, 5, 3);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (11, 6, 1);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (12, 6, 2);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (13, 6, 3);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (14, 8, 1);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (15, 8, 2);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (16, 8, 3);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (17, 9, 2);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (18, 9, 3);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (19, 10, 1);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (20, 10, 2);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (21, 10, 3);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (22, 11, 1);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (23, 11, 2);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (24, 11, 3);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (25, 12, 1);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (26, 12, 2);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (27, 12, 3);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (28, 13, 1);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (29, 13, 2);
-INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (30, 13, 3);
-
-
-#
 # TABLE STRUCTURE FOR: sys_traffic
 #
 
@@ -13441,6 +13395,53 @@ CREATE TABLE `agenda` (
 
 INSERT INTO `agenda` (`id`, `id_artikel`, `tgl_agenda`, `koordinator_kegiatan`, `lokasi_kegiatan`) VALUES (1, 83, '2020-01-08 05:58:42', '', 'Aula Desa');
 INSERT INTO `agenda` (`id`, `id_artikel`, `tgl_agenda`, `koordinator_kegiatan`, `lokasi_kegiatan`) VALUES (2, 41, '2020-04-09 05:59:18', '', 'Ruang rapat');
+
+
+#
+# TABLE STRUCTURE FOR: syarat_surat
+#
+
+DROP TABLE IF EXISTS `syarat_surat`;
+
+CREATE TABLE `syarat_surat` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `surat_format_id` int(10) NOT NULL,
+  `ref_syarat_id` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_surat_format` (`surat_format_id`),
+  CONSTRAINT `id_surat_format` FOREIGN KEY (`surat_format_id`) REFERENCES `tweb_surat_format` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (1, 1, 1);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (2, 1, 2);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (3, 1, 3);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (4, 2, 2);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (5, 2, 3);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (6, 3, 2);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (7, 3, 3);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (8, 5, 1);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (9, 5, 2);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (10, 5, 3);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (11, 6, 1);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (12, 6, 2);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (13, 6, 3);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (14, 8, 1);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (15, 8, 2);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (16, 8, 3);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (17, 9, 2);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (18, 9, 3);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (19, 10, 1);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (20, 10, 2);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (21, 10, 3);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (22, 11, 1);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (23, 11, 2);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (24, 11, 3);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (25, 12, 1);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (26, 12, 2);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (27, 12, 3);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (28, 13, 1);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (29, 13, 2);
+INSERT INTO `syarat_surat` (`id`, `surat_format_id`, `ref_syarat_id`) VALUES (30, 13, 3);
 
 
 #
