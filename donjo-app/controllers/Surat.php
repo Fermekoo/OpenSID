@@ -164,8 +164,6 @@ class Surat extends Admin_Controller {
 	    header('Content-disposition: attachment; filename='.$nama_file.'.zip');
 	    header('Content-type: application/zip');
 	    readfile($berkas_zip);
-
-
 		}
 		else
 		{
