@@ -109,7 +109,7 @@
 		}
 		$data['mandiri'] = isset($data['mandiri']) ? 1 : 0;
 		$outp = $this->db->insert('tweb_surat_format', $data);
-		$raw_path = "surat/raw/";
+		$raw_path = "template-surat/raw/";
 
 		// Folder untuk surat ini
 		$folder_surat = LOKASI_SURAT_DESA.$data['url_surat']."/";
@@ -162,7 +162,7 @@
 			copy($raw_path."data_form_non_warga.raw", $folder_surat."data_form_".$data['url_surat'].".php");
 		}
 
-		pesan_sukses($outp); //Tampilkan Pesan
+		status_sukses($outp); //Tampilkan Pesan
 	}
 
 	private function validasi_surat(&$data)
@@ -178,7 +178,7 @@
 		$this->db->where('id', $id);
 		$outp = $this->db->update('tweb_surat_format', $data);
 
-		pesan_sukses($outp); //Tampilkan Pesan
+		status_sukses($outp); //Tampilkan Pesan
 	}
 
 	public function upload($url="")
@@ -225,7 +225,7 @@
 		$sql = "DELETE FROM tweb_surat_format WHERE jenis <> 1 AND id = ?";
 		$outp = $this->db->query($sql,array($id));
 
-		pesan_sukses($outp); //Tampilkan Pesan
+		status_sukses($outp); //Tampilkan Pesan
 	}
 
 	public function delete_all()
@@ -326,7 +326,7 @@
 
 		$outp = $this->db->query($sql, $id);
 
-		pesan_sukses($outp); //Tampilkan Pesan
+		status_sukses($outp); //Tampilkan Pesan
 	}
 
 	public function lock($id=0, $k=0)
@@ -338,7 +338,7 @@
 
 		$outp = $this->db->query($sql, $id);
 
-		pesan_sukses($outp); //Tampilkan Pesan
+		status_sukses($outp); //Tampilkan Pesan
 	}
 
 	// Tambahkan surat desa jika folder surat tidak ada di surat master
