@@ -228,16 +228,35 @@
 		return $query->result_array();
 	}
 
-	public function hapus_syarat_surat($surat_format_id=false)
+	public function update_syarat_surat($surat_format_id=false, $syarat_surat)
 	{
 		if(empty($surat_format_id))
 		{
 			return FALSE;
 		}
-		$outp = $this->db
+		// Bandingkan dengan  daftar syarat sebelumnya
+		$data = $this->db->select('ref_syarat_id')
 			->where('surat_format_id', $surat_format_id)
-			->delete('syarat_surat');
-		return $outp;
+			->get('syarat_surat')->result_array();
+		$syarat_lama = array_column($data, 'ref_syarat_id');
+		$hapus_syarat = array_diff($syarat_lama, $syarat_surat);
+		$insert_syarat = array_diff($syarat_surat, $syarat_lama);
+
+		// Hapus syarat lama yg tidak ada lagi
+		if (!empty($hapus_syarat))
+		{
+			$hapus_syarat = implode(",", $hapus_syarat);
+			$this->db->where('surat_format_id', $surat_format_id)
+				->where('ref_syarat_id IN (' . $hapus_syarat . ')')
+				->delete('syarat_surat');
+		}
+
+		// Tambahkan syarat baru
+		foreach ($insert_syarat as $syarat) 
+		{
+			$data = array('ref_syarat_id' => $syarat, 'surat_format_id' => $surat_format_id);
+			$result = $this->db->insert('syarat_surat', $data);
+		}
 	}
 
 	public function upload($url="")

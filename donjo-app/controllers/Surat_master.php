@@ -214,12 +214,7 @@ class Surat_master extends Admin_Controller {
 	private function update_surat_mohon($id, $syarat_surat)
 	{
 		if (!empty($syarat_surat)) {
-			$query = $this->lapor_model->hapus_syarat_surat($id);
-			foreach ($syarat_surat as $key => $value) 
-			{
-				$data = array('ref_syarat_id' => $syarat_surat[$key], 'surat_format_id' => $id);
-				$result = $this->db->insert('syarat_surat', $data);
-			}
+			$this->lapor_model->update_syarat_surat($id, $syarat_surat);
 		}
 	}
 
